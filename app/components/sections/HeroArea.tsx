@@ -3,27 +3,12 @@ import { useState } from "react";
 import { CalendarDays } from "lucide-react";
 import { motion } from "framer-motion";
 import image_1 from "../../assets/images/image_1.jpg"
+import AvailabilityCalendar from "../molecules/AvailabilityCalendar";
 
 export default function Hero() {
-  const [dates, setDates] = useState({ arrive: "", depart: "" });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDates({ ...dates, [e.target.name]: e.target.value });
-  };
 
-  const checkDates = (e: React.FormEvent) => {
-    e.preventDefault();
-    const { arrive, depart } = dates;
-    if (!arrive || !depart) {
-      alert("Proszę podać datę przyjazdu i wyjazdu.");
-      return;
-    }
-    if (depart < arrive) {
-      alert("Data wyjazdu nie może być przed datą przyjazdu.");
-      return;
-    }
-    alert(`Sprawdzam dostępność od ${arrive} do ${depart}`);
-  };
+
 
   return (
     <section
@@ -70,36 +55,15 @@ export default function Hero() {
         </motion.p>
 
         {/* Formularz */}
-        <motion.form
-          onSubmit={checkDates}
+        <motion.div
+         
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
           className="flex flex-wrap justify-center gap-3"
         >
-          {["arrive", "depart"].map((field) => (
-            <label
-              key={field}
-              className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/10 rounded-lg shadow-md text-sm"
-            >
-              <CalendarDays className="w-4 h-4" />
-              <input
-                type="date"
-                name={field}
-                value={dates[field as "arrive" | "depart"]}
-                onChange={handleChange}
-                className="bg-transparent outline-none text-white placeholder-white/70 text-sm"
-              />
-            </label>
-          ))}
-
-          <button
-            type="submit"
-            className="px-6 py-2 rounded-lg bg-yellow-600 hover:bg-yellow-700 transition font-semibold uppercase tracking-wide shadow-lg"
-          >
-            Sprawdź termin
-          </button>
-        </motion.form>
+          <AvailabilityCalendar />
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
