@@ -20,9 +20,9 @@ export default function AvailabilityCalendar() {
   ];
 
   return (
-    <section className="py-16 bg-gray-50 text-black">
-      <div className="max-w-5xl mx-auto px-6 text-center">
-        <h2 className="text-3xl font-serif mb-10">Dostępność obiektu</h2>
+
+      <div className="max-w-5xl mx-auto px-6 text-center bg-white py-10 rounded-2xl shadow-md text-gray-800 ">
+        <h2 className="text-3xl mb-10">Dostępność obiektu</h2>
         <p className="text-gray-600 mb-8">
           Sprawdź dostępne terminy i zaplanuj swoje wakacje w naszym ośrodku.
         </p>
@@ -37,10 +37,11 @@ export default function AvailabilityCalendar() {
             locale={pl}
             modifiersClassNames={{
               selected:
-                "bg-red-400 text-white rounded-full hover:bg-red-500 transition",
+                "bg-primary-green text-white rounded-full hover:bg-red-500 transition",
               today: "border border-gray-400 rounded-full",
             }}
             styles={{
+              nav_button: { backgroundColor: 'red', color: 'white'},
               caption: { textAlign: "center", fontWeight: "600" },
               head_cell: { color: "#666", fontSize: "0.9rem" },
               table: { margin: "0 auto" },
@@ -50,14 +51,9 @@ export default function AvailabilityCalendar() {
 
         <div className="mt-6 text-sm text-gray-600 flex justify-center gap-4">
           <div className="flex items-center gap-2">
-            <span className="w-3 h-3 bg-red-400 rounded-full" /> Zajęte
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="w-3 h-3 border border-gray-400 rounded-full" />{" "}
-            Dziś
+            <span className="w-3 h-3 bg-primary-green rounded-full" /> Zajęte
           </div>
         </div>
       </div>
-    </section>
   );
 }

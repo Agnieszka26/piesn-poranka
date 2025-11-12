@@ -10,7 +10,7 @@ const Map = dynamic(() => import("./MapComponent"), { ssr: false });
 
 export default function LocationSection() {
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-gray-50" id="#lokalizacja">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 px-6 items-center">
         {/* === Map === */}
         <div className="h-[400px] rounded-2xl overflow-hidden shadow-md">

@@ -4,7 +4,6 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight, Star, CheckCircle } from "lucide-react";
 import Image from "next/image";
-import clsx from "clsx";
 
 interface Review {
   id: number;

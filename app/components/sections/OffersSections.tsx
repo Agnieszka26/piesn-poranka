@@ -69,7 +69,7 @@ export default function OffersSection() {
   const next = () => setIndex((prev) => (prev === offers.length - 1 ? 0 : prev + 1));
 
   return (
-    <section className="w-full bg-white text-center">
+    <section className="w-full bg-white text-center" id="offers">
       {/* ===== FEATURES BAR ===== */}
       <div className="border-b border-gray-100 py-10">
         <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-8">
