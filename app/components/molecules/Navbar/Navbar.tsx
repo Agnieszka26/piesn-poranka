@@ -4,44 +4,10 @@ import { Phone, Mail, Menu, X } from "lucide-react";
 import { SiFacebook, SiInstagram } from "react-icons/si";
 import Link from "next/link";
 import { texts } from "@/app/assets/texts/texts";
-import { MediaIcon } from "./Navbar/MediaIcon";
-import { IconBaseProps } from "react-icons";
-import NavbarLiElement from "./Navbar/NavbarLiElement";
-// import { li } from "framer-motion/client";
-const links = [
-  {
-    label: "Oferta",
-    href: "/",
-  },
-  {
-    label: "Cennik",
-    href: "/",
-  },
-  {
-    label: "Rezerwacja",
-    href: "/",
-  },
-  {
-    label: "Galeria",
-    href: "/",
-  },
-  {
-    label: "O nas",
-    href: "/",
-  },
-  {
-    label: "Atrakcje",
-    href: "/",
-  },
-  {
-    label: "Aktualności",
-    href: "/",
-  },
-  {
-    label: "Kontakt",
-    href: "/#lokalizacja",
-  },
-];
+import { MediaIcon } from "./MediaIcon";
+import NavbarLiElement from "./NavbarLiElement";
+import { links } from "./links";
+
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -120,35 +86,23 @@ export default function Navbar() {
         }`}
       >
         <div className="flex justify-between items-center p-4 ">
-          <div className="text-xl font-bold">
-           {general.title}
-          </div>
-                  <button
-          className="md:hidden text-2xl focus:outline-none"
-          onClick={toggleMenu}
-          aria-label="Menu"
-        >
-          {menuOpen ? <X size={26} /> : <Menu size={26} />}
-        </button>
+          <div className="text-xl font-bold">{general.title}</div>
+          <button
+            className="md:hidden text-2xl focus:outline-none"
+            onClick={toggleMenu}
+            aria-label="Menu"
+          >
+            {menuOpen ? <X size={26} /> : <Menu size={26} />}
+          </button>
         </div>
 
         <ul className="flex flex-col space-y-4 p-6 uppercase text-sm font-medium -mt-1 bg-white shadow-lg h-screen w-screen">
-          <li className="hover:text-yellow-600 cursor-pointer">
-            Hotel i atrakcje
-          </li>
-          <li className="hover:text-yellow-600 cursor-pointer">Oferty</li>
-          <li className="hover:text-yellow-600 cursor-pointer">
-            Pokoje i domki
-          </li>
-          <li className="hover:text-yellow-600 cursor-pointer">Dla dzieci</li>
-          <li className="hover:text-yellow-600 cursor-pointer">Biznes</li>
-          <li className="hover:text-yellow-600 cursor-pointer">Gastronomia</li>
-          <li className="hover:text-yellow-600 cursor-pointer">
-            Wellness & Spa
-          </li>
-          <li className="hover:text-yellow-600 cursor-pointer">Port</li>
-          <li className="hover:text-yellow-600 cursor-pointer">Imprezy</li>
-          <li className="hover:text-yellow-600 cursor-pointer">Kontakt</li>
+          {links.map((link) => (
+            <Link key={link.label} href={link.href} onClick={() => setMenuOpen(false)}>
+              <li key={link.label}>{link.label}</li>
+            </Link>
+          ))}
+
         </ul>
       </div>
     </nav>
