@@ -1,12 +1,11 @@
 "use client";
 
 import Image, { StaticImageData } from "next/image";
-import gallery_img_1 from "../../assets/images/gallery_1.png"
-import gallery_img_2 from "../../assets/images/gallery_2.png"
-import gallery_img_3 from "../../assets/images/gallery_3.png"
-import gallery_img_4 from "../../assets/images/gallery_4.png"
-import gallery_img_5 from "../../assets/images/gallery_5.png"
-
+import gallery_img_1 from "../../assets/images/gallery_1.png";
+import gallery_img_2 from "../../assets/images/gallery_2.png";
+import gallery_img_3 from "../../assets/images/gallery_3.png";
+import gallery_img_4 from "../../assets/images/gallery_4.png";
+import gallery_img_5 from "../../assets/images/gallery_5.png";
 
 interface GalleryImage {
   id: number;
@@ -15,11 +14,11 @@ interface GalleryImage {
 }
 
 const galleryImages: GalleryImage[] = [
-  { id: 1, src: gallery_img_1, alt: "Widok jeziora o zachodzie słońca" },
-  { id: 2, src:  gallery_img_2, alt: "Sauna i strefa wellness" },
-  { id: 3, src:  gallery_img_3, alt: "Domki nad jeziorem" },
-  { id: 4, src:  gallery_img_4, alt: "Restauracja z widokiem na las" },
-  { id: 5, src:  gallery_img_5, alt: "Pomost nad jeziorem" },
+  { id: 1, src: gallery_img_1, alt: "Widok na góry o zachodzie słońca" },
+  { id: 2, src: gallery_img_2, alt: "jacuzzi" },
+  { id: 3, src: gallery_img_3, alt: "Domki nad w górach" },
+  { id: 4, src: gallery_img_4, alt: "Komfort w zimie" },
+  { id: 5, src: gallery_img_5, alt: "Całoroczny domek" },
 ];
 
 export default function GalleryPreview() {
@@ -39,9 +38,7 @@ export default function GalleryPreview() {
               <Image
                 src={img.src}
                 alt={img.alt}
-                // width={600}
-                // height={400}
-                 className="object-cover w-full h-64 group-hover:scale-105 transition-transform duration-500"
+                className="object-cover w-full h-64 group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition" />
             </div>
@@ -49,9 +46,7 @@ export default function GalleryPreview() {
         </div>
 
         <div className="mt-12">
-          <button
-            className="px-6 py-3 rounded-full bg-white border border-gray-300 text-gray-800 hover:bg-gray-100"
-          >
+          <button className="px-6 py-3 rounded-full bg-white border border-gray-300 text-gray-800 hover:bg-gray-100">
             <a href="/galeria">ZOBACZ WSZYSTKIE ZDJĘCIA</a>
           </button>
         </div>
