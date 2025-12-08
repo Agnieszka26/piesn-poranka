@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Phone, Mail, Menu, X } from "lucide-react";
 import { SiFacebook, SiInstagram } from "react-icons/si";
 import Link from "next/link";
-import { texts } from "@/app/assets/texts/texts";
+import { texts } from "../../../assets/texts/texts";
 import { MediaIcon } from "./MediaIcon";
 import NavbarLiElement from "./NavbarLiElement";
 import { links } from "./links";
