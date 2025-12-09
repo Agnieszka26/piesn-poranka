@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import { GalleryItem } from '../../types';
-import { supabaseUrl } from '../../page';
+// import { supabaseUrl } from '../../page';
 
   function getPublicUrl(path: string) {
+    const supabaseUrl = ""
     if (!path) return null;
     return `${supabaseUrl.replace(/\/$/, '')}/storage/v1/object/public/uploads/${encodeURIComponent(path)}`;
   }
