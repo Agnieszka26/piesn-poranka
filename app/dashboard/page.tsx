@@ -49,42 +49,40 @@ insert into site_content (key, value) values ('offer', 'Tutaj wpisz ofertę') on
 */
 
 import { useEffect, useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, User } from '@supabase/supabase-js';
 import { useForm } from 'react-hook-form';
-import dayjs from 'dayjs';
-import { env } from 'process';
 
-
-
-export const supabaseUrl = env.NEXT_PUBLIC_SUPABASE_URL || "https://vumsqpbytakgvqprzfmn.supabase.co"
-const supabaseAnonKey = env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ""
-
+export const supabaseUrl =  process.env.NEXT_PUBLIC_SUPABASE_URL || "https://vumsqpbytakgvqprzfmn.supabase.co"
+const supabaseAnonKey =  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ""
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export default function AdminPanel() {
-  const [user, setUser] = useState(null);
-
-  const [reviews, setReviews] = useState([]);
-  const [dates, setDates] = useState([]);
-  const [offer, setOffer] = useState('');
+  const [user, setUser] = useState<User| null>(null);
   const [loading, setLoading] = useState(false);
-  const { register, handleSubmit, reset } = useForm();
+
 
   useEffect(() => {
     // auth listener
-    const session = supabase.auth.session ? supabase.auth.session() : null;
-    setUser(session?.user ?? null);
+    // supabase.auth.getSession().then(({ data: { session } }) => {
+    //   setUser(session?.user ?? null);
+    // });
+
+   supabase.auth.getSession().then(({ data: { session } }) => {
+ setUser(session?.user || null);
+    });
+    console.log("supabase.auth.getSession()", user);
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
     });
-    fetchAll();
-    return () => listener?.unsubscribe();
+  
+   
   }, []);
-
-  async function signIn(email) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async function signIn(email: any) {
     setLoading(true);
-    const { error } = await supabase.auth.signIn({ email });
+
+    const { error } = await supabase.auth.signInWithOAuth(email);
     setLoading(false);
     if (error) alert(error.message);
     else alert('Sprawdź skrzynkę - wysłano magic link');
@@ -95,37 +93,10 @@ export default function AdminPanel() {
     setUser(null);
   }
 
-  async function fetchAll() {
-    setLoading(true);
-    const [g, r, d, s] = await Promise.all([
-      supabase.from('gallery').select('*').order('inserted_at', { ascending: false }),
-      supabase.from('reviews').select('*').order('inserted_at', { ascending: false }),
-      supabase.from('dates').select('*').order('day', { ascending: true }),
-      supabase.from('site_content').select('value').eq('key', 'offer')
-    ]);
-    // if (!g.error) setGallery(g.data || []);
-    // if (!r.error) setReviews(r.data || []);
-    // if (!d.error) setDates(d.data || []);
-    if (!s.error && s.data && s.data[0]) setOffer(s.data[0].value || '');
-    setLoading(false);
-  }
-
-
-
-
-
-
-
-
-
-
-
-  // Simple UI
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-5xl mx-auto">
-        <header className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-semibold">CMS Admin</h1>
+          <p className="text-2xl font-semibold">CMS Admin</p>
           <div>
             {user ? (
               <div className="flex items-center gap-3">
@@ -136,19 +107,12 @@ export default function AdminPanel() {
               <LoginForm onSignIn={signIn} loading={loading} />
             )}
           </div>
-        </header>
-
-        <main className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-
-
-        </main>
       </div>
     </div>
   );
 }
-
-function LoginForm({ onSignIn, loading }) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function LoginForm({ onSignIn, loading }: {onSignIn: any, loading: any}) {
   const { register, handleSubmit } = useForm();
   return (
     <form onSubmit={handleSubmit(data => onSignIn(data.email))} className="flex gap-2">

@@ -59,7 +59,7 @@ export default function Footer() {
           <h3 className="text-lg font-semibold text-white mb-4">Znajdź nas</h3>
           <p className="mb-4 text-sm">
             Dołącz do nas w mediach społecznościowych, aby być na bieżąco z
-            nowościami i promocjami!
+            widokami i promocjami!
           </p>
           <div className="flex gap-4">
             <a

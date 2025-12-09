@@ -1,38 +1,67 @@
 "use client";
 
-import { motion } from "framer-motion";
-import image_1 from "../../assets/images/image_1.jpg";
+import { motion, AnimatePresence } from "framer-motion";
 import AvailabilityCalendar from "../molecules/AvailabilityCalendar";
 import { texts } from "../../assets/texts/texts";
+import image_1 from "../../assets/images/winter1.jpg";
+import image_2 from "../../assets/images/winter2.jpg";
+import image_3 from "../../assets/images/winter3.jpg";
+import { useEffect, useState } from "react";
 
 export default function Hero() {
   const general = texts.general;
-  const hero = texts.hero;
+  // Lista zdjęć tła
+  const images = [image_1.src, image_2.src, image_3.src];
+
+  const [index, setIndex] = useState(0);
+
+  const variants = {
+    enter: {
+      x: "100%", // start w prawej części ekranu
+    },
+    center: {
+      x: 0, // widoczny środek
+    },
+    exit: {
+      x: "-100%", // przesuwa się poza ekran w lewo
+    },
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % images.length);
+    }, 7000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section
       className="relative h-screen md:min-h-[600px] min-h-[1200px] flex items-center justify-center text-white overflow-hidden"
       aria-label={`Hero — ${general.title}`}
     >
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-fixed"
-        style={{
-          backgroundImage: `url(${image_1.src})`,
-        }}
-      />
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/50" />
+      <div className="fixed inset-0 overflow-hidden -z-50">
+        <AnimatePresence>
+          <motion.div
+            key={index}
+            className="absolute inset-0 bg-cover bg-center -z-50 "
+            style={{
+              backgroundImage: `url(${images[index]})`,
+            }}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{
+              duration: 1.5,
+              ease: "easeInOut",
+            }}
+          />
+        </AnimatePresence>
+      </div>
 
       {/* Zawartość */}
-      <div className="relative z-10 px-4 pt-12 text-center max-w-4xl">
-        <motion.span
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="block mb-4 font-bold tracking-wider text-sm sm:text-base text-white/80"
-        >
-          {hero.heroTitle}
-        </motion.span>
-
+      <div className="relative z-10 px-4 md:pt-24 text-center max-w-4xl">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -54,7 +83,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
-          className="flex flex-wrap justify-center gap-3 pb-12 "
+          className="flex flex-wrap justify-center gap-3 pb-12"
         >
           <AvailabilityCalendar />
         </motion.div>

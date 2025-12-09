@@ -1,32 +1,18 @@
 export const links = [
-  {
-    label: "Oferta",
-    href: "/",
-  },
+
   {
     label: "Cennik",
-    href: "/",
-  },
-  {
-    label: "Rezerwacja",
-    href: "/",
+    href: "/prices",
   },
   {
     label: "Galeria",
-    href: "/",
+    href: "/gallery",
   },
   {
-    label: "O nas",
-    href: "/",
+    label: "Okolica",
+    href: "/view",
   },
-  {
-    label: "Atrakcje",
-    href: "/",
-  },
-  {
-    label: "Aktualności",
-    href: "/",
-  },
+
   {
     label: "Kontakt",
     href: "/#lokalizacja",

@@ -7,7 +7,8 @@ import { texts } from "../../../assets/texts/texts";
 import { MediaIcon } from "./MediaIcon";
 import NavbarLiElement from "./NavbarLiElement";
 import { links } from "./links";
-
+import Image from "next/image";
+import logo from "../../../assets/logo/logotyp bez tła.png";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -54,8 +55,25 @@ export default function Navbar() {
       {/* Główne menu */}
       <div className="flex justify-between items-center px-6 md:px-8 py-3">
         {/* Logo */}
-        <div className="text-2xl font-semibold tracking-wider">
-          {general.title}
+        <div className="flex justify-center items-center gap-4">
+          <Link href={"/"}>
+            <Image
+              src={logo}
+              alt={"logo"}
+              className={`w-56 h-16  ${scrolled ? "invert" : ""}`}
+            />
+          </Link>
+          {/* <Image src={ logo} alt={"logo"} className="w-24 h-24"/>
+          <p >
+           <span className="text-2xl  tracking-wider font-normal mb-2 drop-shadow-lg">
+            
+            {general.title}
+            </span> 
+            <br />
+            <span className="font-qwigley tracking-wider text-xl">
+              {general.slogan}
+            </span>
+            </p> */}
         </div>
 
         {/* Menu desktopowe */}
@@ -98,11 +116,14 @@ export default function Navbar() {
 
         <ul className="flex flex-col space-y-4 p-6 uppercase text-sm font-medium -mt-1 bg-white shadow-lg h-screen w-screen">
           {links.map((link) => (
-            <Link key={link.label} href={link.href} onClick={() => setMenuOpen(false)}>
+            <Link
+              key={link.label}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+            >
               <li key={link.label}>{link.label}</li>
             </Link>
           ))}
-
         </ul>
       </div>
     </nav>
