@@ -53,7 +53,7 @@ import { createClient, User } from '@supabase/supabase-js';
 import { useForm } from 'react-hook-form';
 
 export const supabaseUrl =  process.env.NEXT_PUBLIC_SUPABASE_URL || "https://vumsqpbytakgvqprzfmn.supabase.co"
-const supabaseAnonKey =  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ""
+const supabaseAnonKey =  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "https://vumsqpbytakgvqprzfmn.supabase.co"
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export default function AdminPanel() {
