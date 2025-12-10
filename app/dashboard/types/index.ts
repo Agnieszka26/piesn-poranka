@@ -1,8 +1,9 @@
 export type GalleryItem = {
     id: number;
-    title: string;
-    description: string;
-    path: string;
+    created_at: string;
+    name_image: string;
+    image_url: string;
+    description: string
 }
 
 export type ReviewItem = {

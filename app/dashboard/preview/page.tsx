@@ -7,6 +7,8 @@ import ButtonTab from "../components/atoms/ButtonTab";
 import AdminReviewTab from "../components/sections/AdminReviewTab";
 import AdminOfferTab from "../components/sections/AdminOfferTab";
 import AdminCalendarTab from "../components/sections/AdminCalendarTab";
+import { LoginForm } from "../page";
+import { redirect } from "next/navigation";
 
 export const supabaseUrl = "https://vumsqpbytakgvqprzfmn.supabase.co";
 const supabaseAnonKey = "sb_publishable_JMXfECcnO1jXLHRZEGFI7g__m8bj3sf";
@@ -14,10 +16,18 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState("galeria");
-
+  async function signOut() {
+    await supabase.auth.signOut();
+    redirect("/dashboard")
+  }
   return (
-    <div className="w-full max-w-2xl mx-auto mt-10">
-      {/* TABS */}
+    <div className="w-full max-w-7xl mx-auto mt-10">
+     <button
+                onClick={signOut}
+                className="px-3 py-1 bg-red-500 text-white rounded"
+              >
+                Wyloguj
+              </button>
       <div className="flex border-b border-gray-300">
         <ButtonTab
           onClick={() => setActiveTab("galeria")}
