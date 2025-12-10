@@ -47,7 +47,7 @@ export default function GalleryPreview() {
 
         <div className="mt-12">
           <button className="px-6 py-3 rounded-full bg-white border border-gray-300 text-gray-800 hover:bg-gray-100">
-            <a href="/galeria">ZOBACZ WSZYSTKIE ZDJĘCIA</a>
+            <a href="/gallery">ZOBACZ WSZYSTKIE ZDJĘCIA</a>
           </button>
         </div>
       </div>

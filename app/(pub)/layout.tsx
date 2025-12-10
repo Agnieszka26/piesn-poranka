@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
-import "./globals.css";
+import { Montserrat, Qwigley } from "next/font/google";
+import "../../app/globals.css";
 import Navbar from "./components/molecules/Navbar/Navbar";
 import Footer from "./components/molecules/Footer";
 
@@ -8,6 +8,12 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
 });
+
+const qwigley = Qwigley({
+variable: "--font-qwigley",
+subsets: ["latin"],
+weight: "400"
+})
 
 export const metadata: Metadata = {
   title: "Pieśń Poranka - odpoczywam w górach ",
@@ -22,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${montserrat.variable} antialiased`}>
+      <body className={` ${qwigley.variable} ${montserrat.variable} antialiased`}>
         <Navbar />
         {children}
         <Footer />

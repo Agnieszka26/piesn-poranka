@@ -8,6 +8,7 @@ import {
   CalendarSync,
   Sun,
   Bed,
+  Footprints,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
@@ -33,11 +34,12 @@ interface Feature {
 // }
 
 const features: Feature[] = [
-  { id: 1, icon: MountainSnow, title: "Domek w górach na wynajem" },
-  { id: 2, icon: CalendarSync, title: "Całoroczny domek w Beskidzie Małym" },
+  { id: 1, icon: MountainSnow, title: "Cicha i spokojna okolica" },
   { id: 3, icon: Sun, title: "Piękne widoki z okna na góry" },
-  { id: 4, icon: Flower2, title: "Czyste powietrze, cisza i spokój" },
-  { id: 5, icon: Bed, title: "Najnowszy standard" },
+  { id: 2, icon: CalendarSync, title: "Całoroczny - kominek i klimatyzacja" },
+  { id: 4, icon: Flower2, title: "Specjalna strefa relaksu: Jacuzzi, taras, hamak, plac zabaw" },
+  { id: 5, icon: Bed, title: "Wysoki standard" },
+  { id: 6, icon: Footprints, title: "Bliskość szlaków turystycznych" },
 ];
 
 const offers = [
@@ -68,8 +70,8 @@ export default function OffersSection() {
   return (
     <section className="w-full bg-white text-center" id="offers">
       {/* ===== FEATURES BAR ===== */}
-      <div className="border-b border-gray-100 py-10">
-        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-8">
+      <div className="  border-b border-gray-100 py-10">
+        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-8">
           {features.map(({ id, icon: Icon, title }) => (
             <div
               key={id}
