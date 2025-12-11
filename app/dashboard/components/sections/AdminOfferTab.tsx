@@ -1,3 +1,4 @@
+"use client"
 import { SupabaseClient } from "@supabase/supabase-js";
 import React, { useEffect } from "react";
 import { OfferItem } from "../../types";

@@ -1,27 +1,8 @@
 "use client";
+import Image from "next/image";
+import { GalleryItem } from "@/app/dashboard/types";
 
-import Image, { StaticImageData } from "next/image";
-import gallery_img_1 from "../../assets/images/gallery_1.png";
-import gallery_img_2 from "../../assets/images/gallery_2.png";
-import gallery_img_3 from "../../assets/images/gallery_3.png";
-import gallery_img_4 from "../../assets/images/gallery_4.png";
-import gallery_img_5 from "../../assets/images/gallery_5.png";
-
-interface GalleryImage {
-  id: number;
-  src: StaticImageData;
-  alt: string;
-}
-
-const galleryImages: GalleryImage[] = [
-  { id: 1, src: gallery_img_1, alt: "Widok na góry o zachodzie słońca" },
-  { id: 2, src: gallery_img_2, alt: "jacuzzi" },
-  { id: 3, src: gallery_img_3, alt: "Domki nad w górach" },
-  { id: 4, src: gallery_img_4, alt: "Komfort w zimie" },
-  { id: 5, src: gallery_img_5, alt: "Całoroczny domek" },
-];
-
-export default function GalleryPreview() {
+export default function GalleryPreview({galleryImages}: {galleryImages: GalleryItem[]}) {
   const visibleImages = galleryImages.slice(0, 5); // pokaż 3–5 zdjęć
 
   return (
@@ -36,9 +17,11 @@ export default function GalleryPreview() {
               className="relative group overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition"
             >
               <Image
-                src={img.src}
-                alt={img.alt}
+                src={img.image_url}
+                alt={img.description}
                 className="object-cover w-full h-64 group-hover:scale-105 transition-transform duration-500"
+                width={1200}
+                height={1200}
               />
               <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition" />
             </div>

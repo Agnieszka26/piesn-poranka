@@ -1,3 +1,4 @@
+"use client"
 import { SupabaseClient } from "@supabase/supabase-js";
 import dayjs from "dayjs";
 import React, { useEffect } from "react";

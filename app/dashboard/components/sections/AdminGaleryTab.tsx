@@ -1,9 +1,11 @@
+"use client"
 import { SupabaseClient } from "@supabase/supabase-js";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import { GalleryItem } from "../../types";
 import GalleryPreview from "@/app/(pub)/components/sections/GalleryPreview";
+import { useRouter } from "next/navigation";
 
 type GalleryItemForm = GalleryItem & {
   file: FileList;
@@ -18,6 +20,7 @@ const AdminGalleryTab = ({
   const { register, handleSubmit, reset } = useForm<GalleryItemForm>();
   const [gallery, setGallery] = useState<GalleryItem[]>([]);
   const [loading, setLoading] = useState(false);
+ const router = useRouter();
 
   async function onUploadGallery(form: GalleryItemForm) {
     if (!form.file) return alert("Choose file");
@@ -52,11 +55,11 @@ const AdminGalleryTab = ({
         },
       ])
       .single();
-    setLoading(false);
-    console.log("error", error);
-    if (error) return alert(error.message);
-    setGallery((prev) => [data, ...prev]);
-    reset();
+      console.log("error", error);
+      if (error) return alert(error.message);
+      reset();
+      setLoading(false);
+      router.refresh();
   }
 
   async function deleteGallery(id: number, path: string) {
@@ -114,7 +117,7 @@ const AdminGalleryTab = ({
       </form>
 
       {loading ? (
-        <p>loading</p>
+        <p> Chwilkę... </p>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {gallery.map((item) => (
@@ -122,10 +125,10 @@ const AdminGalleryTab = ({
               {item?.image_url ? (
                 <Image
                   src={item.image_url}
-                  alt={item.name_image}
+                  alt={item.description}
                   className="w-full h-40 object-cover"
-                  width={60}
-                  height={60}
+                  width={1200}
+                  height={1200}
                 />
               ) : (
                 <div className="h-40 bg-gray-100" />
@@ -151,7 +154,7 @@ const AdminGalleryTab = ({
       )}
       <hr className="py-4"/>
       <p className="mx-auto text-2xl text-center p-8">Podgląd zdjęć w galerii na stronie</p>
-      <GalleryPreview />
+      <GalleryPreview galleryImages={gallery} />
     </div>
   );
 };
