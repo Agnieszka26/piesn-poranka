@@ -1,8 +1,15 @@
 import { ReviewItem } from "@/app/dashboard/types";
 import { CheckCircle, Star } from "lucide-react";
-import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
+import "dayjs/locale/pl";
+import relativeTime from "dayjs/plugin/relativeTime";
+import dayjs from "dayjs";
 
+dayjs.extend(relativeTime);
+dayjs.locale("pl");
+function timeAgo(dateString: string) {
+  return "dodano " + dayjs(dateString).fromNow();
+}
 const ReviewCard = (r: ReviewItem) => {
   return (
     <div key={r.id} className="min-w-[calc(100%/3)] px-3">
@@ -14,9 +21,9 @@ const ReviewCard = (r: ReviewItem) => {
           </div>
           <div className="flex-1">
             <p className="font-semibold text-gray-800 text-sm">{r.author}</p>
-            <p className="text-xs text-gray-500">{r.inserted_at}</p>
+            <p className="text-xs text-gray-500">{timeAgo(r.inserted_at)}</p>
           </div>
-         <FcGoogle />
+          <FcGoogle />
         </div>
 
         {/* Rating */}

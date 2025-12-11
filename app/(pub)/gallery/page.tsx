@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
@@ -19,15 +19,15 @@ const items = [
   { title: "Performances", img: image5 },
   { title: "A miniature village", img: image6 },
 ];
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?? ""
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 //{galleryImages}: {galleryImages: GalleryItem[]}
 export default function Gallery() {
-  const [selectedIndex, setSelectedIndex] = useState<number|null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const [selectedSlide, setSelectedSlide] = useState(0);
-  const [gallery, setGallery] = useState<GalleryItem[]>([])
+  const [gallery, setGallery] = useState<GalleryItem[]>([]);
 
   // Przesunięcie karuzeli na wybrane zdjęcie po otwarciu
   useEffect(() => {
@@ -41,30 +41,36 @@ export default function Gallery() {
     if (!emblaApi) return;
     setSelectedSlide(emblaApi.selectedScrollSnap());
   }, [emblaApi]);
- async function getAllGallery() {
-       const data = await supabase.from("gallery").select("*");
-       if (data.error) return alert(data.error.message);
-       setGallery(data.data);
-     }
+  async function getAllGallery() {
+    const data = await supabase.from("gallery").select("*");
+    if (data.error) return alert(data.error.message);
+    setGallery(data.data);
+  }
 
-     useEffect(() => {
-       async function fetchData() {
-         await getAllGallery();
-       }
-       fetchData();
-     }, []);
+  useEffect(() => {
+    async function fetchData() {
+      await getAllGallery();
+    }
+    fetchData();
+  }, []);
   useEffect(() => {
     const select = () => {
       if (emblaApi) {
         emblaApi.on("select", onSelect);
         onSelect();
       }
-    }
-    select()
+    };
+    select();
   }, [emblaApi, onSelect]);
 
-  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
+  const scrollPrev = useCallback(
+    () => emblaApi && emblaApi.scrollPrev(),
+    [emblaApi]
+  );
+  const scrollNext = useCallback(
+    () => emblaApi && emblaApi.scrollNext(),
+    [emblaApi]
+  );
 
   return (
     <>
@@ -82,10 +88,9 @@ export default function Gallery() {
               >
                 <Image
                   src={item.image_url}
-         alt={item.description}
-                  
+                  alt={item.description}
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
-           fill
+                  fill
                 />
               </div>
             ))}

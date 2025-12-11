@@ -6,7 +6,7 @@ import LocationSection from "./components/sections/LocationSection/LocationSecti
 import OffersSection from "./components/sections/OffersSections";
 import ReviewsSection from "./components/sections/ReviewsSections";
 import { useEffect, useState } from "react";
-import { GalleryItem } from "../dashboard/types";
+import { GalleryItem, ReviewItem } from "../dashboard/types";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?? ""
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
@@ -14,6 +14,7 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export default function Home() {
    const [gallery, setGallery] = useState<GalleryItem[]>([]);
+   const [reviews, setReviews] = useState<ReviewItem[]>([])
      async function getAllGallery() {
        const data = await supabase.from("gallery").select("*");
        if (data.error) return alert(data.error.message);
@@ -26,13 +27,29 @@ export default function Home() {
        }
        fetchData();
      }, []);
+     async function getAllReviews() {
+         const { data, error } = await supabase
+           .from("reviews")
+           .select("*")
+           .order("id", { ascending: false });
+         if (error) return alert(error.message);
+         setReviews(data);
+         console.log("data", data);
+       }
+       useEffect(() => {
+         async function fetchData() {
+           await getAllReviews();
+         }
+         fetchData();
+       }, []);
+     
 
   return (
     <main>
       <Hero />
       <OffersSection />
       <GalleryPreview galleryImages={gallery}  />
-      <ReviewsSection />
+      <ReviewsSection reviews={reviews}/>
       <LocationSection />
     </main>
   );

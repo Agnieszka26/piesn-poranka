@@ -87,7 +87,7 @@ const AdminGalleryTab = ({
   }, []);
 
   return (
-    <div>
+    <div className="py-4">
       <form
         onSubmit={handleSubmit(onUploadGallery)}
         className="flex flex-col gap-2 mb-4"
@@ -119,7 +119,7 @@ const AdminGalleryTab = ({
       {loading ? (
         <p> Chwilkę... </p>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 pb-4">
           {gallery.map((item) => (
             <div key={item?.id} className="border rounded overflow-hidden">
               {item?.image_url ? (
@@ -152,8 +152,8 @@ const AdminGalleryTab = ({
 
         </div>
       )}
-      <hr className="py-4"/>
       <p className="mx-auto text-2xl text-center p-8">Podgląd zdjęć w galerii na stronie</p>
+      {/* <hr className="py-4"/> */}
       <GalleryPreview galleryImages={gallery} />
     </div>
   );
