@@ -17,6 +17,7 @@ import img1 from "../../assets//images/oferta_1.jpg";
 import img2 from "../../assets/images/oferta_2.jpg";
 import img3 from "../../assets/images/oferta_3.jpg";
 import Link from "next/link";
+import { OfferItem } from "@/app/dashboard/types";
 
 interface Feature {
   id: number;
@@ -63,10 +64,7 @@ const offers = [
   },
 ];
 
-export default function OffersSection() {
-
-
-
+export default function NewsSections({offers}: {offers: OfferItem[]}) {
   return (
     <section className="w-full bg-white text-center" id="offers">
       {/* ===== FEATURES BAR ===== */}
@@ -100,7 +98,7 @@ export default function OffersSection() {
               >
                 <div className="relative">
                   <Image
-                    src={offer.img}
+                    src={offer.image}
                     alt={offer.title}
                     width={400}
                     height={250}
@@ -109,7 +107,7 @@ export default function OffersSection() {
                 </div>
                 <div className="p-4">
                   <p className="font-medium text-gray-800">{offer.title}</p>
-                  <Link href="/offers" className="text-sm text-primary-green">
+                  <Link href={`/news/${offer.id}`} className="text-sm text-primary-green">
                     czytaj więcej
                   </Link>
                 </div>

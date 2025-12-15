@@ -2,40 +2,45 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-   images: {
-    remotePatterns: 
-     [
+  images: {
+    remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-        port: '',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "",
+        pathname: "/**",
       },
 
       {
-        protocol: 'https',
-        hostname: 'plus.unsplash.com',
-        port: '',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "plus.unsplash.com",
+        port: "",
+        pathname: "/**",
       },
       {
-        protocol: 'https',
-        hostname: 'vumsqpbytakgvqprzfmn.supabase.co',
+        protocol: "https",
+        hostname: "vumsqpbytakgvqprzfmn.supabase.co",
         port: "",
-        pathname: "/storage/v1/object/sign/gallery-images/**"
+        pathname: "/storage/v1/object/sign/gallery-images/**",
       },
       {
-        protocol: 'https',
+        protocol: "https",
         hostname: "vumsqpbytakgvqprzfmn.supabase.co",
         port: "",
-        pathname: "/storage/v1/object/public/uploads/**"
+        pathname: "/storage/v1/object/public/uploads/**",
       },
-            {
-        protocol: 'https',
+      {
+        protocol: "https",
         hostname: "vumsqpbytakgvqprzfmn.supabase.co",
         port: "",
-        pathname: "/storage/v1/object/public/gallery-images/**"
-      }
+        pathname: "/storage/v1/object/public/gallery-images/**",
+      },
+      {
+        protocol: "https",
+        hostname: "vumsqpbytakgvqprzfmn.supabase.co",
+        port: "",
+        pathname: "/storage/v1/object/sign/offers-images/**"
+      },
     ],
   },
 };

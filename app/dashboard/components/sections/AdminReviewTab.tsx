@@ -16,6 +16,8 @@ const AdminReviewTab = ({
   const [reviews, setReviews] = useState<ReviewItem[]>([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async function addReview(data: any) {
     setLoading(true);
@@ -65,6 +67,8 @@ const AdminReviewTab = ({
   useEffect(() => {
     async function fetchData() {
       await getAllReviews();
+        const user =await supabase.auth.getUser()
+  console.log('user', user)
     }
     fetchData();
   }, []);

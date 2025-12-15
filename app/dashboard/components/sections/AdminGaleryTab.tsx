@@ -20,7 +20,7 @@ const AdminGalleryTab = ({
   const { register, handleSubmit, reset } = useForm<GalleryItemForm>();
   const [gallery, setGallery] = useState<GalleryItem[]>([]);
   const [loading, setLoading] = useState(false);
- const router = useRouter();
+  const router = useRouter();
 
   async function onUploadGallery(form: GalleryItemForm) {
     if (!form.file) return alert("Choose file");
@@ -67,12 +67,13 @@ const AdminGalleryTab = ({
     setLoading(true);
     const { error } = await supabase.from("gallery").delete().eq("id", id);
     const { error: rmErr } = await supabase.storage
-      .from("gallery-image")
+      .from("gallery-images")
       .remove([path]);
     setLoading(false);
     if (error) return alert(error.message);
     setGallery((prev) => prev.filter((x) => x.id !== id));
   }
+
   async function getAllGallery() {
     const data = await supabase.from("gallery").select("*");
     console.log(data);
@@ -153,7 +154,6 @@ const AdminGalleryTab = ({
         </div>
       )}
       <p className="mx-auto text-2xl text-center p-8">Podgląd zdjęć w galerii na stronie</p>
-      {/* <hr className="py-4"/> */}
       <GalleryPreview galleryImages={gallery} />
     </div>
   );
