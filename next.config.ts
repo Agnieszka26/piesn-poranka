@@ -41,6 +41,12 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/storage/v1/object/sign/offers-images/**"
       },
+            {
+        protocol: "https",
+        hostname: "vumsqpbytakgvqprzfmn.supabase.co",
+        port: "",
+        pathname: "/storage/v1/object/sign/hero-images/**"
+      },
     ],
   },
 };

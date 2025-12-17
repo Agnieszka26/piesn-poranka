@@ -22,3 +22,10 @@ export type OfferItem = {
   description: string;
   image: string;
 };
+
+export type HeroImageItem = {
+  id: number;
+  image_name: string;
+  image_url: string;
+  status: "selected"|"disabled"
+};

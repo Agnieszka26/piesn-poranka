@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import OffersTable from "../molecules/Table";
+import NewsSections from "@/app/(pub)/components/sections/NewsSections";
 
 type OfferItemForm = OfferItem & {
   file: FileList;
@@ -98,7 +99,7 @@ const AdminOfferTab = ({
   return (
     <div>
       {" "}
-      <h2 className="font-semibold mb-3">Oferta</h2>
+      <h2 className="font-semibold mb-3">Utwórz nowy post, który będzie się wyświetlał na stronie.</h2>
       <form
         onSubmit={handleSubmit(onUploadOffer)}
         className="flex flex-col gap-2"
@@ -113,10 +114,11 @@ const AdminOfferTab = ({
           placeholder="Podtytuł"
           className="border p-2 rounded"
         />
-        <input
+        <textarea
           {...register("description")}
           placeholder="Treść"
           className="border p-2 rounded"
+          rows={10}
         />
         <label htmlFor="image">Obrazek</label>
         <input
@@ -127,13 +129,17 @@ const AdminOfferTab = ({
           className="border p-2 rounded"
         />
        
-        <p>formularz do kreaowania oferty</p>
+        
         <button className="px-3 py-2 bg-blue-600 text-white rounded">
           Zapisz
         </button>
       </form>
     {offer &&  <OffersTable initialData={offer} deleteOffer={deleteOffer}/>}
-      {<p>tu się bedą wyświetlały oferty na strone</p>}
+      <p className="text-center my-6 text-2xl">Podgląd: </p>
+      {offer && <NewsSections offers={offer}/> }
+      
+
+
     </div>
   );
 };

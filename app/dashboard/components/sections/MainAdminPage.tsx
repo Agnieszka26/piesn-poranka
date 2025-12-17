@@ -7,6 +7,7 @@ import AdminReviewTab from "../../components/sections/AdminReviewTab";
 import AdminOfferTab from "../../components/sections/AdminOfferTab";
 import AdminCalendarTab from "../../components/sections/AdminCalendarTab";
 import { redirect } from "next/navigation";
+import AdminBackgroundTab from "./AdminBackgroundTab";
 
 export default function MainAdminPage({
   supabase,
@@ -14,7 +15,7 @@ export default function MainAdminPage({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   supabase: SupabaseClient<any, "public", "public", any, any>;
 }) {
-  const [activeTab, setActiveTab] = useState("galeria");
+  const [activeTab, setActiveTab] = useState("kalendarz");
   async function signOut() {
     await supabase.auth.signOut();
     redirect("/dashboard");
@@ -28,6 +29,16 @@ export default function MainAdminPage({
         Wyloguj
       </button>
       <div className="flex border-b border-gray-300">
+                <ButtonTab
+          onClick={() => setActiveTab("kalendarz")}
+          activeTab={activeTab}
+          label={"kalendarz"}
+        />
+                <ButtonTab
+          onClick={() => setActiveTab("tło")}
+          activeTab={activeTab}
+          label={"tło"}
+        />
         <ButtonTab
           onClick={() => setActiveTab("galeria")}
           activeTab={activeTab}
@@ -39,23 +50,22 @@ export default function MainAdminPage({
           label={"opinie"}
         />
         <ButtonTab
-          onClick={() => setActiveTab("oferta")}
+          onClick={() => setActiveTab("wieści")}
           activeTab={activeTab}
-          label={"oferta"}
+          label={"wieści"}
         />
-        <ButtonTab
-          onClick={() => setActiveTab("kalendarz")}
-          activeTab={activeTab}
-          label={"kalendarz"}
-        />
+
       </div>
 
       {/* CONTENT */}
-      <div className="p-4 bg-gray-50 border border-gray-200 rounded-b-lg">
+      <div className={`p-4 bg-gray-50 border border-gray-200 rounded-b-lg ${ activeTab === "kalendarz" &&  "bg-primary-green"}` }>
+        {activeTab === "kalendarz" && <AdminCalendarTab supabase={supabase} />}
+        {activeTab === "tło" && <AdminBackgroundTab 
+        supabase={supabase} 
+        />}
         {activeTab === "galeria" && <AdminGalleryTab supabase={supabase} />}
         {activeTab === "opinie" && <AdminReviewTab supabase={supabase} />}
-        {activeTab === "oferta" && <AdminOfferTab supabase={supabase} />}
-        {activeTab === "kalendarz" && <AdminCalendarTab supabase={supabase} />}
+        {activeTab === "wieści" && <AdminOfferTab supabase={supabase} />}
       </div>
     </div>
   );

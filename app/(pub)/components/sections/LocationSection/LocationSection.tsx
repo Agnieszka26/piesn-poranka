@@ -6,9 +6,11 @@ import "leaflet/dist/leaflet.css";
 import dynamic from "next/dynamic";
 import { MapPin, Phone, Mail, House } from "lucide-react";
 
+
 const Map = dynamic(() => import("./MapComponent"), { ssr: false });
 
 export default function LocationSection() {
+
   return (
     <section className="py-20 bg-gray-50" id="lokalizacja">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 px-6 items-center">

@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { OfferItem } from "../../types";
 import Image from "next/image";
-import example from "../../../(pub)/assets/images/gallery_1.png"
 type Props = {
   initialData: OfferItem[];
   deleteOffer: (id: number, path: string) => Promise<void>;
@@ -12,11 +11,11 @@ const OffersTable: React.FC<Props> = ({ initialData, deleteOffer }) => {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editForm, setEditForm] = useState<Partial<OfferItem>>({});
 
-  const handleEditClick = (item: OfferItem) => {
-    console.log('item', item)
-    setEditingId(item.id);
-    setEditForm(item);
-  };
+  // const handleEditClick = (item: OfferItem) => {
+  //   console.log('item', item)
+  //   setEditingId(item.id);
+  //   setEditForm(item);
+  // };
 
   const handleSave = (id: number) => {
     // setData((prev) =>
@@ -34,24 +33,24 @@ const OffersTable: React.FC<Props> = ({ initialData, deleteOffer }) => {
   };
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto pt-6">
       <table className="min-w-full border border-gray-200">
         <thead className="bg-gray-100">
           <tr>
             <th className="px-4 py-2 border">ID</th>
-            <th className="px-4 py-2 border">Created At</th>
-            <th className="px-4 py-2 border">Title</th>
-            <th className="px-4 py-2 border">Subtitle</th>
-            <th className="px-4 py-2 border">Description</th>
-            <th className="px-4 py-2 border">Image</th>
-            <th className="px-4 py-2 border">Actions</th>
+            <th className="px-4 py-2 border">Utworzono</th>
+            <th className="px-4 py-2 border">Tytuł</th>
+            <th className="px-4 py-2 border">Podtytuł</th>
+            <th className="px-4 py-2 border">Opis</th>
+            <th className="px-4 py-2 border">Obrazek</th>
+            <th className="px-4 py-2 border"></th>
           </tr>
         </thead>
         <tbody>
           {initialData.map((item) => (
             <tr key={item.id} className="hover:bg-gray-50">
               <td className="px-4 py-2 border">{item.id}</td>
-              <td className="px-4 py-2 border">{item.created_at}</td>
+              <td className="px-4 py-2 border">{new Date(item.created_at).toLocaleDateString("pl")}</td>
               <td className="px-4 py-2 border">
                 {editingId === item.id ? (
                   <input
@@ -130,12 +129,12 @@ const OffersTable: React.FC<Props> = ({ initialData, deleteOffer }) => {
                   </>
                 ) : (
                   <>
-                    <button
+                    {/* <button
                       onClick={() => handleEditClick(item)}
                       className="bg-blue-500 text-white px-2 py-1 rounded"
                     >
                       Edytuj
-                    </button>
+                    </button> */}
                     <button
                       onClick={() => deleteOffer(item.id, item.image)}
                       className="bg-red-500 text-white px-2 py-1 rounded"
