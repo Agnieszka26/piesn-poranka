@@ -22,6 +22,12 @@ export default function Navbar() {
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const general = texts.general;
+  useEffect(() => {
+  if (window.location.hash) {
+    const el = document.querySelector(window.location.hash);
+    el?.scrollIntoView({ behavior: "smooth" });
+  }
+}, []);
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
@@ -79,7 +85,7 @@ export default function Navbar() {
         {/* Menu desktopowe */}
         <ul className="hidden md:flex space-x-8 font-medium uppercase text-sm">
           {links.map((link) => (
-            <NavbarLiElement
+            <NavbarLiElement 
               key={link.label}
               href={link.href}
               label={link.label}

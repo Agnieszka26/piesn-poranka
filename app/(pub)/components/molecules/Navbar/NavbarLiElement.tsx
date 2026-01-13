@@ -10,7 +10,7 @@ const NavbarLiElement = ({ href, label }: NavbarLiElementProps) => {
       key={label}
       className="cursor-pointer transition-colors duration-300  hover:text-primary-green"
     >
-      <Link href={href}>{label}</Link>
+      <Link href={href} scroll >{label}</Link>
     </li>
   );
 };

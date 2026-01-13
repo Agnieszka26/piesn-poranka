@@ -1,17 +1,12 @@
 "use client";
-
 import { motion, AnimatePresence } from "framer-motion";
 import AvailabilityCalendar from "../molecules/AvailabilityCalendar";
 import { texts } from "../../assets/texts/texts";
-import image_1 from "../../assets/images/winter1.jpg";
-import image_2 from "../../assets/images/winter2.jpg";
-import image_3 from "../../assets/images/winter3.jpg";
 import { useEffect, useState } from "react";
 
-export default function Hero() {
+export default function Hero({ imgs }: { imgs: string[] }) {
   const general = texts.general;
   // Lista zdjęć tła
-  const images = [image_1.src, image_2.src, image_3.src];
 
   const [index, setIndex] = useState(0);
 
@@ -28,12 +23,13 @@ export default function Hero() {
   };
 
   useEffect(() => {
+    if (!imgs.length) return;
     const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % images.length);
-    }, 7000);
+      setIndex((prev) => (prev + 1) % imgs.length);
+    }, 6000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [imgs.length]);
 
   return (
     <section
@@ -44,24 +40,19 @@ export default function Hero() {
         <AnimatePresence>
           <motion.div
             key={index}
-            className="absolute inset-0 bg-cover bg-center -z-50 "
-            style={{
-              backgroundImage: `url(${images[index]})`,
-            }}
+            className="absolute inset-0 bg-cover bg-center -z-10 "
+            style={{ backgroundImage: `url(${imgs[index]})` }}
             variants={variants}
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{
-              duration: 1.5,
-              ease: "easeInOut",
-            }}
-          />
-        </AnimatePresence>
+            transition={{ duration: 1.5, ease: "easeInOut" }}
+          />{" "}
+        </AnimatePresence>{" "}
       </div>
 
       {/* Zawartość */}
-      <div className="relative z-10 px-4 md:pt-24 text-center max-w-4xl">
+      <div className="relative z-10 px-4 md:pt-32 text-center max-w-4xl">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

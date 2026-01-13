@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
@@ -8,6 +8,8 @@ import image3 from "../assets/images/gallery_3.png";
 import image4 from "../assets/images/gallery_4.png";
 import image5 from "../assets/images/gallery_5.png";
 import image6 from "../assets/images/gallery_5.png";
+import { GalleryItem } from "@/app/dashboard/types";
+import { createClient } from "@supabase/supabase-js";
 
 const items = [
   { title: "Tea tasting", img: image1 },
@@ -17,11 +19,15 @@ const items = [
   { title: "Performances", img: image5 },
   { title: "A miniature village", img: image6 },
 ];
-
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+//{galleryImages}: {galleryImages: GalleryItem[]}
 export default function Gallery() {
-  const [selectedIndex, setSelectedIndex] = useState<number|null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const [selectedSlide, setSelectedSlide] = useState(0);
+  const [gallery, setGallery] = useState<GalleryItem[]>([]);
 
   // Przesunięcie karuzeli na wybrane zdjęcie po otwarciu
   useEffect(() => {
@@ -35,19 +41,36 @@ export default function Gallery() {
     if (!emblaApi) return;
     setSelectedSlide(emblaApi.selectedScrollSnap());
   }, [emblaApi]);
+  async function getAllGallery() {
+    const data = await supabase.from("gallery").select("*");
+    if (data.error) return alert(data.error.message);
+    setGallery(data.data);
+  }
 
+  useEffect(() => {
+    async function fetchData() {
+      await getAllGallery();
+    }
+    fetchData();
+  }, []);
   useEffect(() => {
     const select = () => {
       if (emblaApi) {
         emblaApi.on("select", onSelect);
         onSelect();
       }
-    }
-    select()
+    };
+    select();
   }, [emblaApi, onSelect]);
 
-  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
+  const scrollPrev = useCallback(
+    () => emblaApi && emblaApi.scrollPrev(),
+    [emblaApi]
+  );
+  const scrollNext = useCallback(
+    () => emblaApi && emblaApi.scrollNext(),
+    [emblaApi]
+  );
 
   return (
     <>
@@ -57,17 +80,17 @@ export default function Gallery() {
           <h1 className="text-3xl mb-10">Galeria</h1>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {items.map((item, i) => (
+            {gallery.map((item, i) => (
               <div
                 key={i}
                 className="relative h-64 rounded-lg overflow-hidden shadow-md group cursor-pointer"
                 onClick={() => setSelectedIndex(i)}
               >
                 <Image
-                  src={item.img}
-                  alt={item.title}
-                  fill
+                  src={item.image_url}
+                  alt={item.description}
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  fill
                 />
               </div>
             ))}
@@ -96,16 +119,16 @@ export default function Gallery() {
               <div className="relative">
                 <div className="overflow-hidden" ref={emblaRef}>
                   <div className="flex">
-                    {items.map((item, i) => (
+                    {gallery.map((item, i) => (
                       <div key={i} className="flex-shrink-0 w-full px-2">
                         <Image
-                          src={item.img}
-                          alt={item.title}
-                          width={800}
-                          height={600}
+                          src={item.image_url}
+                          alt={item.description}
+                          width={1200}
+                          height={1200}
                           className="rounded-lg object-contain"
                         />
-                        <h2 className="mt-2 text-center">{item.title}</h2>
+                        <h2 className="mt-2 text-center">{item.description}</h2>
                       </div>
                     ))}
                   </div>

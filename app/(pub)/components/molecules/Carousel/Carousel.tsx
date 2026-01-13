@@ -31,11 +31,11 @@ const Carousel = ({ reviews }: PropType) => {
               className="embla__slide  shrink-0 basis-full lg:basis-1/2 xl:basis-1/3"
             >
               <ReviewCard
-                id={r.id}
-                author={r.author}
-                text={r.text}
-                rating={r.rating}
-                inserted_at={r.inserted_at}
+                id={r?.id?? "null"}
+                author={r?.author ?? " "}
+                text={r?.text ?? ""}
+                rating={r?.rating ?? ""} 
+                inserted_at={r?.inserted_at ?? ""}
               />
             </div>
           ))}
