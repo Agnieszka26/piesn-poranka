@@ -40,7 +40,11 @@ export default function Home() {
   }
   async function getAllGallery() {
     const data = await supabase.from("gallery").select("*");
-    if (data.error) return alert(data.error.message);
+    if (data.error){
+      
+      console.log("error", data.error)
+       return alert(data.error.message)};
+       console.log('data', data)
     setGallery(data.data);
   }
   async function getAllHeroImages() {
@@ -68,6 +72,7 @@ export default function Home() {
       await getAllNews();
       await getAllHeroImages();
     }
+    console.log('NEXT_PUBLIC_SUPABASE_URL', supabaseUrl)
     fetchData();
   }, []);
   useEffect(() => {

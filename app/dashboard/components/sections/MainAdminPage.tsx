@@ -1,24 +1,21 @@
 "use client";
 import { useState } from "react";
 import AdminGalleryTab from "../../components/sections/AdminGaleryTab";
-import { SupabaseClient } from "@supabase/supabase-js";
 import ButtonTab from "../../components/atoms/ButtonTab";
 import AdminReviewTab from "../../components/sections/AdminReviewTab";
 import AdminOfferTab from "../../components/sections/AdminOfferTab";
 import AdminCalendarTab from "../../components/sections/AdminCalendarTab";
 import { redirect } from "next/navigation";
 import AdminBackgroundTab from "./AdminBackgroundTab";
+import { supabase } from "../../helpers/supabase-browser";
 
-export default function MainAdminPage({
-  supabase,
-}: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  supabase: SupabaseClient<any, "public", "public", any, any>;
-}) {
+export default function MainAdminPage() {
   const [activeTab, setActiveTab] = useState("kalendarz");
   async function signOut() {
-    await supabase.auth.signOut();
-    redirect("/dashboard");
+  await fetch('/auth/logout', {
+      method: 'POST',
+    });
+    redirect("/login");
   }
   return (
     <div className="w-full max-w-7xl mx-auto mt-10">
@@ -29,12 +26,12 @@ export default function MainAdminPage({
         Wyloguj
       </button>
       <div className="flex border-b border-gray-300">
-                <ButtonTab
+        <ButtonTab
           onClick={() => setActiveTab("kalendarz")}
           activeTab={activeTab}
           label={"kalendarz"}
         />
-                <ButtonTab
+        <ButtonTab
           onClick={() => setActiveTab("tło")}
           activeTab={activeTab}
           label={"tło"}
@@ -54,15 +51,16 @@ export default function MainAdminPage({
           activeTab={activeTab}
           label={"wieści"}
         />
-
       </div>
 
       {/* CONTENT */}
-      <div className={`p-4 bg-gray-50 border border-gray-200 rounded-b-lg ${ activeTab === "kalendarz" &&  "bg-primary-green"}` }>
+      <div
+        className={`p-4 bg-gray-50 border border-gray-200 rounded-b-lg ${
+          activeTab === "kalendarz" && "bg-primary-green"
+        }`}
+      >
         {activeTab === "kalendarz" && <AdminCalendarTab supabase={supabase} />}
-        {activeTab === "tło" && <AdminBackgroundTab 
-        supabase={supabase} 
-        />}
+        {activeTab === "tło" && <AdminBackgroundTab supabase={supabase} />}
         {activeTab === "galeria" && <AdminGalleryTab supabase={supabase} />}
         {activeTab === "opinie" && <AdminReviewTab supabase={supabase} />}
         {activeTab === "wieści" && <AdminOfferTab supabase={supabase} />}
