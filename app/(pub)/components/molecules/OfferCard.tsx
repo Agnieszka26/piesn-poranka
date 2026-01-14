@@ -48,7 +48,7 @@ export default function OfferCard({ offer }: any) {
           )}
 
           <p className="text-2xl font-bold">
-            {offer.price} zł
+            {offer.price} {offer.price && "zł"}
           </p>
 
           <p className="text-xs text-gray-500">
