@@ -7,6 +7,39 @@
   fill:  #ffffff !important;
 }
 
+/* mobile */
+.rdp-caption_label {
+  font-size: 0.75rem !important;
+}
+.rdp-day_button{
+  width: 1.8rem !important;
+  height: 1.8rem !important;
+  padding: 0;
+}
+.rdp-row {
+  gap: 0.1rem;
+}
+
+.rdp-day{
+  width: 1.8rem !important;
+  height: 1.8rem !important;
+}
+
+
+/* desktop */
+@media (min-width: 640px) {
+  .rdp-caption_label {
+    font-size: 1rem !important;
+  }
+  .rdp-day_button, .rdp-day{
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+  }
+  .rdp-row {
+    gap: 0.25rem !important;
+  }
+}
+
 body {
   font-family: var(--font-montserrat), sans-serif;
 }

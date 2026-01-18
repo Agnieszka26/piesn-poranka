@@ -8,6 +8,7 @@ import ReviewsSection from "./components/sections/ReviewsSections";
 import { useEffect, useState } from "react";
 import { GalleryItem, OfferItem, ReviewItem } from "../dashboard/types";
 import Features from "./components/sections/Features";
+import InfoSection from "./components/sections/InfoSection";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
@@ -72,7 +73,7 @@ export default function Home() {
       await getAllNews();
       await getAllHeroImages();
     }
-    console.log('NEXT_PUBLIC_SUPABASE_URL', supabaseUrl)
+   
     fetchData();
   }, []);
   useEffect(() => {
@@ -94,6 +95,7 @@ export default function Home() {
           <Hero imgs={images} />
           <section className="w-full bg-white text-center" id="offers">
             <Features />
+            <InfoSection />
             <NewsSections offers={offers} />
           </section>
           <GalleryPreview galleryImages={gallery} />

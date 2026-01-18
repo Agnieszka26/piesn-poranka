@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 
 export default function Hero({ imgs }: { imgs: string[] }) {
   const general = texts.general;
-  // Lista zdjęć tła
 
   const [index, setIndex] = useState(0);
 
@@ -33,7 +32,7 @@ export default function Hero({ imgs }: { imgs: string[] }) {
 
   return (
     <section
-      className="relative h-screen md:min-h-[600px] min-h-[1200px] flex items-center justify-center text-white overflow-hidden"
+      className="relative h-screen md:min-h-[600px]  flex items-center justify-center text-white overflow-hidden"
       aria-label={`Hero — ${general.title}`}
     >
       <div className="fixed inset-0 overflow-hidden -z-50">
