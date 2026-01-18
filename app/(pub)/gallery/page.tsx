@@ -2,27 +2,13 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
-import image1 from "../assets/images/gallery_1.png";
-import image2 from "../assets/images/gallery_2.png";
-import image3 from "../assets/images/gallery_3.png";
-import image4 from "../assets/images/gallery_4.png";
-import image5 from "../assets/images/gallery_5.png";
-import image6 from "../assets/images/gallery_5.png";
 import { GalleryItem } from "@/app/dashboard/types";
 import { createClient } from "@supabase/supabase-js";
 
-const items = [
-  { title: "Tea tasting", img: image1 },
-  { title: "Plethora of books", img: image2 },
-  { title: "Chrysanthemum farm", img: image3 },
-  { title: "Agricultural workshops", img: image4 },
-  { title: "Performances", img: image5 },
-  { title: "A miniature village", img: image6 },
-];
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
-//{galleryImages}: {galleryImages: GalleryItem[]}
+
 export default function Gallery() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
@@ -120,15 +106,16 @@ export default function Gallery() {
                 <div className="overflow-hidden" ref={emblaRef}>
                   <div className="flex">
                     {gallery.map((item, i) => (
-                      <div key={i} className="flex-shrink-0 w-full px-2">
-                        <Image
-                          src={item.image_url}
-                          alt={item.description}
-                          width={1200}
-                          height={1200}
-                          className="rounded-lg object-contain"
-                        />
-                        <h2 className="mt-2 text-center">{item.description}</h2>
+                      <div key={i} className="shrink-0 w-full px-2">
+                        <div className="relative w-full aspect-square flex items-center justify-center rounded-lg">
+                          <Image
+                            src={item.image_url}
+                            alt={item.description}
+                            fill
+                            className="rounded-lg object-contain"
+                            sizes="(max-width: 768px) 100vw, 600px"
+                          />
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -150,7 +137,7 @@ export default function Gallery() {
 
                 {/* Paginacja */}
                 <div className="flex justify-center mt-4 space-x-2">
-                  {items.map((_, i) => (
+                  {gallery.map((_, i) => (
                     <button
                       key={i}
                       className={`w-3 h-3 rounded-full ${
