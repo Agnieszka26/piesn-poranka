@@ -21,14 +21,14 @@ const features: Feature[] = [
 ];
 const Features = () => {
   return (
-     <div className="border-b border-gray-100 py-10">
+     <div className="border-b border-gray-100 py-10 px-8">
         <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-8">
           {features.map(({ id, icon: Icon, title }) => (
             <div
               key={id}
               className="flex flex-col items-center justify-center text-gray-700"
             >
-              <Icon className="w-12 h-12 mb-3 text-primary-green" />
+              <Icon className="md:w-12 md:h-12 mb-3 text-primary-green" />
               <p className="text-sm font-medium leading-snug">{title}</p>
             </div>
           ))}

@@ -114,9 +114,9 @@ const InfoElement = ({
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl md:text-5xl font-light mb-6">{title}</h2>
+          <h2  className={clsx("text-2xl md:text-4xl mt-12 font-light mb-6", isReversed ? "md:text-left" : "md:text-right")}>{title}</h2>
 
-          <p className="text-gray-600 leading-relaxed max-w-xl mb-8">
+          <p className={clsx("text-gray-600 leading-relaxed max-w-xl mb-8", isReversed ? "md:text-left" : "md:text-right")}>
             {content}
           </p>
         </motion.div>
