@@ -7,7 +7,6 @@ export async function signInAction(formData: FormData) {
 
   if (!email) {
      throw new Error('Email jest wymagany')
-    // return { error: 'Email jest wymagany' }
   }
 
   const supabase = createSupabaseServerClient()
@@ -21,8 +20,5 @@ export async function signInAction(formData: FormData) {
 
   if (error) {
       throw new Error(error.message)
-    // return { error: error.message }
   }
-
-  // return { success: true }
 }

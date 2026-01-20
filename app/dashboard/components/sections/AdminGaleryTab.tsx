@@ -44,8 +44,7 @@ const AdminGalleryTab = ({
       .from("gallery-images")
       .createSignedUrl(path, 360000);
     const publicPhotoUrl = url?.signedUrl;
-    // store metadata
-    const { data, error } = await supabase
+     const { data, error } = await supabase
       .from("gallery")
       .insert([
         {
