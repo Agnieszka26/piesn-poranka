@@ -58,7 +58,7 @@ const NewsPage = ({ id }: { id: string }) => {
           {/* IMAGE */}
           <div className="relative w-full h-[220px] md:h-[420px]">
             <Image
-              src={offer.image}
+              src={offer.main_image}
               alt={offer.title}
               fill
               className="object-cover"
@@ -83,7 +83,10 @@ const NewsPage = ({ id }: { id: string }) => {
             )}
 
             <div className="prose prose-lg max-w-none text-gray-800">
-              {offer.description}
+              {
+                   <div dangerouslySetInnerHTML={{ __html: offer.description }} />
+
+                }
             </div>
           </div>
         </article>

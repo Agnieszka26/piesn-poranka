@@ -1,22 +1,18 @@
-"use client"
-import { SupabaseClient } from "@supabase/supabase-js";
-import React, { useEffect, useState } from "react";
+"use client";
+
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import { GalleryItem } from "../../types";
 import GalleryPreview from "@/app/(pub)/components/sections/GalleryPreview";
 import { useRouter } from "next/navigation";
+import { supabase } from "../../helpers/supabase-browser";
 
 type GalleryItemForm = GalleryItem & {
   file: FileList;
 };
 
-const AdminGalleryTab = ({
-  supabase,
-}: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  supabase: SupabaseClient<any, "public", "public", any, any>;
-}) => {
+const AdminGalleryTab = () => {
   const { register, handleSubmit, reset } = useForm<GalleryItemForm>();
   const [gallery, setGallery] = useState<GalleryItem[]>([]);
   const [loading, setLoading] = useState(false);
@@ -25,8 +21,7 @@ const AdminGalleryTab = ({
   async function onUploadGallery(form: GalleryItemForm) {
     if (!form.file) return alert("Choose file");
     const file = form.file[0];
-    console.log("file", file);
-    if (!file?.name) return alert("Choose a file name")
+    if (!file?.name) return alert("Choose a file name");
     const filename = `${file.name}`;
     setLoading(true);
 
@@ -39,12 +34,12 @@ const AdminGalleryTab = ({
       return alert(upErr.message);
     }
 
-    const { path, } = fileStorage;
+    const { path } = fileStorage;
     const { data: url } = await supabase.storage
       .from("gallery-images")
       .createSignedUrl(path, 360000);
     const publicPhotoUrl = url?.signedUrl;
-     const { data, error } = await supabase
+    const { data, error } = await supabase
       .from("gallery")
       .insert([
         {
@@ -54,11 +49,11 @@ const AdminGalleryTab = ({
         },
       ])
       .single();
-      console.log("error", error);
-      if (error) return alert(error.message);
-      reset();
-      setLoading(false);
-      router.refresh();
+    console.log("error", error);
+    if (error) return alert(error.message);
+    reset();
+    setLoading(false);
+    router.refresh();
   }
 
   async function deleteGallery(id: number, path: string) {
@@ -70,12 +65,13 @@ const AdminGalleryTab = ({
       .remove([path]);
     setLoading(false);
     if (error) return alert(error.message);
+    if (rmErr) return alert(rmErr.message);
+
     setGallery((prev) => prev.filter((x) => x.id !== id));
   }
 
   async function getAllGallery() {
     const data = await supabase.from("gallery").select("*");
-    console.log(data);
     if (data.error) return alert(data.error.message);
     setGallery(data.data);
   }
@@ -149,10 +145,11 @@ const AdminGalleryTab = ({
               </div>
             </div>
           ))}
-
         </div>
       )}
-      <p className="mx-auto text-2xl text-center p-8">Podgląd zdjęć w galerii na stronie</p>
+      <p className="mx-auto text-2xl text-center p-8">
+        Podgląd zdjęć w galerii na stronie
+      </p>
       <GalleryPreview galleryImages={gallery} />
     </div>
   );

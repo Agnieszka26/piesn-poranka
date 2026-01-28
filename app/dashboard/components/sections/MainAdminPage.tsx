@@ -3,14 +3,13 @@ import { useState } from "react";
 import AdminGalleryTab from "../../components/sections/AdminGaleryTab";
 import ButtonTab from "../../components/atoms/ButtonTab";
 import AdminReviewTab from "../../components/sections/AdminReviewTab";
-import AdminOfferTab from "../../components/sections/AdminOfferTab";
+import AdminOfferTab from "./AdminOfferTab/AdminOfferTab";
 import AdminCalendarTab from "../../components/sections/AdminCalendarTab";
 import { redirect } from "next/navigation";
 import AdminBackgroundTab from "./AdminBackgroundTab";
-import { supabase } from "../../helpers/supabase-browser";
 
 export default function MainAdminPage() {
-  const [activeTab, setActiveTab] = useState("kalendarz");
+  const [activeTab, setActiveTab] = useState("wieści");
   async function signOut() {
   await fetch('/auth/logout', {
       method: 'POST',
@@ -59,11 +58,11 @@ export default function MainAdminPage() {
           activeTab === "kalendarz" && "bg-primary-green"
         }`}
       >
-        {activeTab === "kalendarz" && <AdminCalendarTab supabase={supabase} />}
-        {activeTab === "tło" && <AdminBackgroundTab supabase={supabase} />}
-        {activeTab === "galeria" && <AdminGalleryTab supabase={supabase} />}
-        {activeTab === "opinie" && <AdminReviewTab supabase={supabase} />}
-        {activeTab === "wieści" && <AdminOfferTab supabase={supabase} />}
+        {activeTab === "kalendarz" && <AdminCalendarTab  />}
+        {activeTab === "tło" && <AdminBackgroundTab />}
+        {activeTab === "galeria" && <AdminGalleryTab />}
+        {activeTab === "opinie" && <AdminReviewTab  />}
+        {activeTab === "wieści" && <AdminOfferTab />}
       </div>
     </div>
   );

@@ -45,7 +45,6 @@ export default function Home() {
       
       console.log("error", data.error)
        return alert(data.error.message)};
-       console.log('data', data)
     setGallery(data.data);
   }
   async function getAllHeroImages() {

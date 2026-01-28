@@ -1,20 +1,15 @@
 "use client";
-import { SupabaseClient } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { HeroImageItem } from "../../types";
+import { supabase } from "../../helpers/supabase-browser";
 
 type HeroImageItemForm = HeroImageItem & {
   file: FileList;
 };
-const AdminBackgroundTab = ({
-  supabase,
-}: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  supabase: SupabaseClient<any, "public", "public", any, any>;
-}) => {
+const AdminBackgroundTab = () => {
   const { register, handleSubmit, reset } = useForm<HeroImageItemForm>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -36,7 +31,6 @@ const AdminBackgroundTab = ({
   async function onUploadHeroImage(form: HeroImageItemForm) {
     if (!form.file) return alert("Choose file");
     const file = form.file[0];
-    console.log("file", file);
     if (!file?.name) return alert("Choose a file name");
     const filename = `${file.name}`;
     setLoading(true);

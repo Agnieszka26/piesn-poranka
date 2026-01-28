@@ -3,16 +3,11 @@ import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ReviewItem } from "../../types";
-import { SupabaseClient } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
 import ReviewsSection from "@/app/(pub)/components/sections/ReviewsSections";
+import { supabase } from "../../helpers/supabase-browser";
 
-const AdminReviewTab = ({
-  supabase,
-}: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  supabase: SupabaseClient<any, "public", "public", any, any>;
-}) => {
+const AdminReviewTab = () => {
   const [reviews, setReviews] = useState<ReviewItem[]>([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -62,13 +57,11 @@ const AdminReviewTab = ({
       .order("id", { ascending: false });
     if (error) return alert(error.message);
     setReviews(data);
-    console.log("data", data);
+
   }
   useEffect(() => {
     async function fetchData() {
       await getAllReviews();
-        const user =await supabase.auth.getUser()
-  console.log('user', user)
     }
     fetchData();
   }, []);

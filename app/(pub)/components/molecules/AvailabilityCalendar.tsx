@@ -26,7 +26,6 @@ const getDaysBetween = (start: Date, end: Date): Date[] => {
 export default function AvailabilityCalendar() {
   const [error, setError] = useState<string | null>(null);
   const [bookedDays, setBookedDays] = useState<Date[]>([]);
-  console.log("bookedDays", bookedDays);
   const getRanges = async () => {
     const { data, error } = await supabase
       .from("calendar")
@@ -38,7 +37,6 @@ export default function AvailabilityCalendar() {
       setError(error.message);
       return;
     }
-    console.log("calendar data", data);
     if (!data) return;
 
     const days = data.flatMap((range) =>
