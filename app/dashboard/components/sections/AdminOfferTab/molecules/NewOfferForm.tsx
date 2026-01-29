@@ -1,10 +1,11 @@
 import { supabase } from "@/app/dashboard/helpers/supabase-browser";
 import { OfferItemForm, PendingImage } from "@/app/dashboard/types";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Editor from "./Editor";
 import { replaceBlobImages, uploadImages, uploadMainImage } from "../utils";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const uploadOffer = async (
   form: OfferItemForm,
@@ -34,42 +35,50 @@ const NewOfferForm = ({ onSuccess }: { onSuccess: () => void }) => {
 
 
   async function onUploadOffer(form: OfferItemForm) {
-    setLoading(true);
-    try {
-      const uploads = await uploadImages(pendingImages, supabase);
-      const main_image = await uploadMainImage(
-        form.file[0]
-          ? { id: "main_image", file: form.file[0] }
-          : { id: "", file: new File([], "") },
-        supabase,
-      );
-      const imagesUrls = uploads.map((u) => u.url);
-      const finalDescription = replaceBlobImages(description, imagesUrls);
+  const toastId = toast.loading("Dodawanie posta...");
 
-      await uploadOffer(form, finalDescription, imagesUrls, main_image.url);
+  setLoading(true);
+  try {
+    const uploads = await uploadImages(pendingImages, supabase);
 
-      reset();
-      setMainImagePreview(null);
-      setDescription("");
-      setPendingImages([]);
-      router.refresh();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-      alert(err.message);
-    } finally {
-      setLoading(false);
-      onSuccess();
-    }
+    const main_image = await uploadMainImage(
+      form.file[0]
+        ? { id: "main_image", file: form.file[0] }
+        : { id: "", file: new File([], "") },
+      supabase,
+    );
+
+    const imagesUrls = uploads.map((u) => u.url);
+    const finalDescription = replaceBlobImages(description, imagesUrls);
+
+    await uploadOffer(form, finalDescription, imagesUrls, main_image.url);
+
+    reset();
+    setMainImagePreview(null);
+    setDescription("");
+    setPendingImages([]);
+
+    toast.success("Post został dodany ✅", { id: toastId });
+
+    router.refresh();
+    onSuccess();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
+    toast.error(err.message ?? "Nie udało się dodać posta", {
+      id: toastId,
+    });
+  } finally {
+    setLoading(false);
   }
+}
+
 
   return (
     <div>
       <h2 className="font-semibold mb-3">
         Utwórz nowy post, który będzie się wyświetlał na stronie.
       </h2>
-      {loading ? (
-        <p>Dodawanie postu...</p>
-      ) : (
+
         <form
           onSubmit={handleSubmit(onUploadOffer)}
           className="flex flex-col gap-2"
@@ -119,7 +128,6 @@ const NewOfferForm = ({ onSuccess }: { onSuccess: () => void }) => {
             Zapisz
           </button>
         </form>
-      )}
     </div>
   );
 };

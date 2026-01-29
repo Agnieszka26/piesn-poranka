@@ -7,6 +7,8 @@ import { supabase } from "../../../helpers/supabase-browser";
 import NewOfferForm from "./molecules/NewOfferForm";
 import { Modal } from "./molecules/Modal";
 import EditOfferForm from "./molecules/EditOfferForm";
+import toast from "react-hot-toast";
+
 
 const AdminOfferTab = () => {
   const [offers, setOffers] = React.useState<OfferItem[] | null>(null);
@@ -15,28 +17,48 @@ const AdminOfferTab = () => {
     null,
   );
 
-  async function deleteOffer(id: number, paths: string | string[] | null, main_image: string) {
-    if (!confirm("Usunąć ofertę?")) return;
+async function deleteOffer(
+  id: number,
+  paths: string | string[] | null,
+  main_image: string
+) {
+  if (!confirm("Usunąć ofertę?")) return;
+
+  const toastId = toast.loading("Usuwanie oferty...");
+
+  try {
     setLoading(true);
+
     const { error } = await supabase.from("offers").delete().eq("id", id);
+    if (error) throw error;
+
     if (paths) {
       const { error: rmErr } = await supabase.storage
         .from("offers-images")
         .remove(typeof paths === "string" ? [paths] : paths);
-      setLoading(false);
-      if (rmErr) return alert(rmErr.message);
+      if (rmErr) throw rmErr;
     }
+
     if (main_image) {
       const { error: rmErr } = await supabase.storage
         .from("offers-images")
         .remove([main_image]);
-      setLoading(false);
-      if (rmErr) return alert(rmErr.message);
+      if (rmErr) throw rmErr;
     }
-    setLoading(false);
-    if (error) return alert(error.message);
+
     setOffers((prev) => prev && prev.filter((x) => x.id !== id));
+
+    toast.success("Oferta została usunięta 🗑️", { id: toastId });
+    
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
+    toast.error(err.message ?? "Nie udało się usunąć oferty", {
+      id: toastId,
+    });
+  } finally {
+    setLoading(false);
   }
+}
 
   async function getAllOffers() {
     const { data, error } = await supabase

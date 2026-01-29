@@ -2,6 +2,7 @@ import { Montserrat } from "next/font/google";
 import "../globals.css";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "./helpers/supabase-server";
+import { Toaster } from "react-hot-toast";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -23,7 +24,12 @@ export default async function RootLayout({
       <body className={`${montserrat.variable} antialiased`}>
         
         {children}
-      
+       <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 3000,
+          }}
+        />
       </body>
     </html>
   );

@@ -40,3 +40,16 @@ export async function updateOfferAction(input: OfferItem) {
     throw new Error('Nie udało się zapisać zmian')
   }
 }
+
+ export const changeStatusAction = async (id: number, status: "disabled" | "selected") => {
+     const supabase = createSupabaseServerClient()
+    const { error } = await supabase
+      .from("hero_background")
+      .update({ status: status })
+      .eq("id", id)
+      .select();
+  if (error) {
+    console.error('updateOfferAction error:', error)
+    throw new Error('Nie udało się zapisać zmian')
+  }
+  };
