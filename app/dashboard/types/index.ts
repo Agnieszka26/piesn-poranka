@@ -4,6 +4,7 @@ export type GalleryItem = {
   name_image: string;
   image_url: string;
   description: string;
+  position: number;
 };
 
 export type ReviewItem = {

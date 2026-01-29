@@ -40,7 +40,7 @@ export default function Home() {
     setOffers(data.data);
   }
   async function getAllGallery() {
-    const data = await supabase.from("gallery").select("*");
+    const data = await supabase.from("gallery").select("*").order("position", { ascending: true });;
     if (data.error){
       
       console.log("error", data.error)
