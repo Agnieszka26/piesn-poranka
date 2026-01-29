@@ -1,18 +1,10 @@
 "use client";
 import { SupabaseClient } from "@supabase/supabase-js";
-import { addMonths } from "date-fns";
-import dayjs from "dayjs";
 import React, { useEffect, useMemo, useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { pl } from "react-day-picker/locale";
-/**
- * ZAŁOŻENIA ZACHOWANIA:
- * 1. Zakresy z bazy są WIDOCZNE w kalendarzu (np. jako zajęte dni)
- * 2. Nie można kliknąć dni, które już są zajęte
- * 3. Admin może zaznaczyć nowy zakres (from → to)
- * 4. Po kliknięciu „Zapisz zakres” wysyłamy zakres do Supabase
- */
+import { supabase } from "../../helpers/supabase-browser";
 
 type CalendarRow = {
   id: number;
@@ -21,12 +13,7 @@ type CalendarRow = {
   status: string;
 };
 type BookedRange = DateRange & { id: number };
-const AdminCalendarTab = ({
-  supabase,
-}: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  supabase: SupabaseClient<any, "public", "public", any, any>;
-}) => {
+const AdminCalendarTab = () => {
   const [range, setRange] = useState<DateRange | undefined>();
   const [bookedRanges, setBookedRanges] = useState<BookedRange[]>([]);
   const [loading, setLoading] = useState(false);
@@ -93,7 +80,6 @@ const AdminCalendarTab = ({
 
   const deleteRange = async (id: number) => {
     setLoading(true);
-    console.log("id", id);
     const { error } = await supabase.from("calendar").delete().eq("id", id);
 
     if (error) {

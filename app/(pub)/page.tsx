@@ -40,12 +40,11 @@ export default function Home() {
     setOffers(data.data);
   }
   async function getAllGallery() {
-    const data = await supabase.from("gallery").select("*");
+    const data = await supabase.from("gallery").select("*").order("position", { ascending: true });;
     if (data.error){
       
       console.log("error", data.error)
        return alert(data.error.message)};
-       console.log('data', data)
     setGallery(data.data);
   }
   async function getAllHeroImages() {

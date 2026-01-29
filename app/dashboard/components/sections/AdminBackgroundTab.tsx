@@ -1,26 +1,24 @@
 "use client";
-import { SupabaseClient } from "@supabase/supabase-js";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { HeroImageItem } from "../../types";
+import { supabase } from "../../helpers/supabase-browser";
+import { changeStatusAction } from "../../actions";
+import toast from "react-hot-toast";
 
 type HeroImageItemForm = HeroImageItem & {
   file: FileList;
 };
-const AdminBackgroundTab = ({
-  supabase,
-}: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  supabase: SupabaseClient<any, "public", "public", any, any>;
-}) => {
+const AdminBackgroundTab = () => {
   const { register, handleSubmit, reset } = useForm<HeroImageItemForm>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string>("");
+
   const [gallery, setGallery] = useState<HeroImageItem[]>([]);
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   async function getAllGallery() {
     const data = await supabase.from("hero_background").select("*");
 
@@ -36,7 +34,6 @@ const AdminBackgroundTab = ({
   async function onUploadHeroImage(form: HeroImageItemForm) {
     if (!form.file) return alert("Choose file");
     const file = form.file[0];
-    console.log("file", file);
     if (!file?.name) return alert("Choose a file name");
     const filename = `${file.name}`;
     setLoading(true);
@@ -69,7 +66,7 @@ const AdminBackgroundTab = ({
     if (error) {
       setError(error.message);
     } else {
-      setSuccess("Dodano zdjęcie ");
+      toast.success("Dodano zdjęcie 📸");
       setGallery([]);
       await getAllGallery();
       setLoading(false);
@@ -79,21 +76,24 @@ const AdminBackgroundTab = ({
   }
 
   const changeStatus = async (id: number, status: "disabled" | "selected") => {
-    const { data, error } = await supabase
-      .from("hero_background")
-      .update({ status: status })
-      .eq("id", id)
-      .select();
-    if (error) {
-      setError(error.message);
-    } else {
-      setSuccess(status==="selected" ? "Wybrano zdjęcie" : "Odrzucono zdjęcie");
-      setGallery([]);
-      await getAllGallery();
-      setLoading(false);
-
-      router.refresh();
-    }
+    const toastId = toast.loading("Zapisywanie...");
+    startTransition(async () => {
+      try {
+        await changeStatusAction(id, status);
+        toast.success(
+          status === "selected"
+            ? "Zdjęcie ustawione jako główne ⭐"
+            : "Zdjęcie odrzucone 🗑️"
+            , { id: toastId }
+        );
+        await getAllGallery();
+        router.refresh();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
+        setError(e.message);
+        toast.error(e.message ?? "Coś poszło nie tak", { id: toastId });
+      }
+    });
   };
 
   useEffect(() => {
@@ -129,50 +129,52 @@ const AdminBackgroundTab = ({
             {loading ? "Zapisywanie..." : "  Dodaj zdjęcie"}
           </button>
           {error && <p className="text-red-500 mx-4">{error}</p>}
-          {success && <p className="mx-4">{success} ✅</p>}
         </form>
         <p className="mx-auto text-2xl text-center p-4">Dostępne zdjęcia: </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {gallery.map(({ image_name, image_url, id, status }) => (
-            <div
-              key={id}
-              className="flex flex-col justify-center items-center gap-1"
-            >
+          {isPending ? (
+            <p>Aktualizowanie...</p>
+          ) : (
+            gallery.map(({ image_name, image_url, id, status }) => (
               <div
                 key={id}
-                className="relative group overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition"
+                className="flex flex-col justify-center items-center gap-1"
               >
-                {status === "selected" && (
-                  <div className="p-4 bg-primary-green text-white flex justify-between items-center">
-                    <p>Wybrane na główną</p>{" "}
-                    <button
-                      className="px-3 py-2 bg-indigo-600 text-white rounded z-50 cursor-pointer"
-                      onClick={() => changeStatus(id, "disabled")}
-                    >
-                      {" "}
-                      Odrzuć{" "}
-                    </button>
-                  </div>
-                )}
-                <Image
-                  src={image_url}
-                  alt={image_name}
-                  className="object-cover w-full h-64 group-hover:scale-105 transition-transform duration-500"
-                  width={1200}
-                  height={1200}
-                />
-                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition" />
-              </div>
-              {status === "disabled" && (
-                <button
-                  onClick={() => changeStatus(id, "selected")}
-                  className="px-3 py-2 bg-indigo-600 text-white rounded cursor-pointer"
+                <div
+                  key={id}
+                  className="relative group overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition"
                 >
-                  Wybierz
-                </button>
-              )}
-            </div>
-          ))}
+                  {status === "selected" && (
+                    <div className="p-4 bg-primary-green text-white flex justify-between items-center">
+                      <p>Wybrane na główną</p>{" "}
+                      <button
+                        className="px-3 py-2 bg-indigo-600 text-white rounded z-50 cursor-pointer"
+                        onClick={() => changeStatus(id, "disabled")}
+                      >
+                        Odrzuć
+                      </button>
+                    </div>
+                  )}
+                  <Image
+                    src={image_url}
+                    alt={image_name}
+                    className="object-cover w-full h-64 group-hover:scale-105 transition-transform duration-500"
+                    width={1200}
+                    height={1200}
+                  />
+                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition" />
+                </div>
+                {status === "disabled" && (
+                  <button
+                    onClick={() => changeStatus(id, "selected")}
+                    className="px-3 py-2 bg-indigo-600 text-white rounded cursor-pointer"
+                  >
+                    Wybierz
+                  </button>
+                )}
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import "dayjs/locale/pl";
+import { imageStylesDescription } from "@/app/dashboard/components/sections/AdminOfferTab/utils";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
@@ -58,7 +59,7 @@ const NewsPage = ({ id }: { id: string }) => {
           {/* IMAGE */}
           <div className="relative w-full h-[220px] md:h-[420px]">
             <Image
-              src={offer.image}
+              src={offer.main_image}
               alt={offer.title}
               fill
               className="object-cover"
@@ -83,7 +84,11 @@ const NewsPage = ({ id }: { id: string }) => {
             )}
 
             <div className="prose prose-lg max-w-none text-gray-800">
-              {offer.description}
+              {
+                   <div dangerouslySetInnerHTML={{ __html: offer.description }} 
+                    className={imageStylesDescription}/>
+
+                }
             </div>
           </div>
         </article>

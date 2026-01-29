@@ -4,6 +4,7 @@ export type GalleryItem = {
   name_image: string;
   image_url: string;
   description: string;
+  position: number;
 };
 
 export type ReviewItem = {
@@ -17,10 +18,11 @@ export type ReviewItem = {
 export type OfferItem = {
   id: number;
   created_at: string;
+  main_image: string;
   title: string;
   subtitle: string;
   description: string;
-  image: string;
+  images: string|null| string[];
 };
 
 export type HeroImageItem = {
@@ -28,4 +30,13 @@ export type HeroImageItem = {
   image_name: string;
   image_url: string;
   status: "selected"|"disabled"
+};
+
+export type PendingImage = {
+  id: string;
+  file: File;
+};
+
+export type OfferItemForm = OfferItem & {
+  file: FileList;
 };

@@ -28,7 +28,7 @@ export default function Gallery() {
     setSelectedSlide(emblaApi.selectedScrollSnap());
   }, [emblaApi]);
   async function getAllGallery() {
-    const data = await supabase.from("gallery").select("*");
+    const data = await supabase.from("gallery").select("*").order("position", { ascending: true });;
     if (data.error) return alert(data.error.message);
     setGallery(data.data);
   }
