@@ -6,6 +6,8 @@ import EditorToolbar from "./Toolbar";
 
 import { PendingImage } from "@/app/dashboard/types";
 import { useEffect } from "react";
+import { imageStylesDescription } from "../utils";
+import clsx from "clsx";
 
 type Props = {
   value: string;
@@ -78,7 +80,7 @@ const TiptapEditor = ({ value, onChange, setPendingImages }: Props) => {
       <EditorToolbar editor={editor} onImageUpload={uploadImage} />
       <EditorContent
         editor={editor}
-        className="prose prose-sm max-w-none min-h-[200px] p-4 focus:outline-none"
+         className={clsx(imageStylesDescription, "prose prose-sm max-w-none min-h-[200px] p-4 focus:outline-none")}
       />
     </div>
   );

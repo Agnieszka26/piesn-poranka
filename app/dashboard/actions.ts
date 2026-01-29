@@ -1,6 +1,8 @@
 'use server'
 
 import { createSupabaseServerClient } from './helpers/supabase-server'
+import { OfferItem } from './types'
+
 
 export async function signInAction(formData: FormData) {
   const email = formData.get('email') as string
@@ -20,5 +22,21 @@ export async function signInAction(formData: FormData) {
 
   if (error) {
       throw new Error(error.message)
+  }
+}
+
+export async function updateOfferAction(input: OfferItem) {
+  const supabase = createSupabaseServerClient()
+
+  const { id, ...data } = input
+
+  const { error } = await supabase
+    .from('offers')
+    .update(data)
+    .eq('id', id)
+
+  if (error) {
+    console.error('updateOfferAction error:', error)
+    throw new Error('Nie udało się zapisać zmian')
   }
 }

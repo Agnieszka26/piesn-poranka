@@ -21,7 +21,7 @@ export type OfferItem = {
   title: string;
   subtitle: string;
   description: string;
-  images: string|null;
+  images: string|null| string[];
 };
 
 export type HeroImageItem = {

@@ -1,18 +1,20 @@
 import { PendingImage } from "@/app/dashboard/types";
 import { SupabaseClient } from "@supabase/supabase-js";
 
-export function replaceBlobImages(html: string, images: string[]) {
+export function replaceBlobImages(html: string, images: string[]): string {
   const doc = new DOMParser().parseFromString(html, "text/html");
   const imgTags = doc.querySelectorAll("img");
+  let i = 0;
 
-  imgTags.forEach((img, index) => {
-    if (img.src.startsWith("blob:")) {
-      img.src = images[index]; // URL z Supabase
+  imgTags.forEach((img) => {
+    if (img.src.startsWith("blob:") && i < images.length) {
+      img.src = images[i]; 
+      i++;
     }
   });
-
   return doc.body.innerHTML;
 }
+
 export const uploadImages = async (
   pendingImages: PendingImage[],
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -60,3 +62,9 @@ export const uploadMainImage = async (
   }
     return { id, url: "" };
 };
+
+export const imageStylesDescription = `className="prose prose-neutral max-w-none
+             prose-img:rounded-xl
+             prose-img:mx-auto
+             prose-img:my-8
+             prose-img:shadow-lg`

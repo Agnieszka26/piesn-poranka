@@ -15,14 +15,14 @@ const AdminOfferTab = () => {
     null,
   );
 
-  async function deleteOffer(id: number, paths: string | null, main_image: string) {
+  async function deleteOffer(id: number, paths: string | string[] | null, main_image: string) {
     if (!confirm("Usunąć ofertę?")) return;
     setLoading(true);
     const { error } = await supabase.from("offers").delete().eq("id", id);
     if (paths) {
       const { error: rmErr } = await supabase.storage
         .from("offers-images")
-        .remove([paths]);
+        .remove(typeof paths === "string" ? [paths] : paths);
       setLoading(false);
       if (rmErr) return alert(rmErr.message);
     }
@@ -56,7 +56,7 @@ const AdminOfferTab = () => {
 
   return (
     <div>
-      <NewOfferForm />
+      <NewOfferForm onSuccess={getAllOffers} />
       {selectedOffer && (
         <Modal onClose={() => setSelectedOffer(null)}>
           <EditOfferForm offer={selectedOffer} />

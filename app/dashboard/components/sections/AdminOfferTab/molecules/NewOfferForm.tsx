@@ -23,7 +23,7 @@ const uploadOffer = async (
   if (error) throw error;
 };
 
-const NewOfferForm = () => {
+const NewOfferForm = ({ onSuccess }: { onSuccess: () => void }) => {
   const { register, handleSubmit, reset} = useForm<OfferItemForm>();
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
@@ -49,6 +49,7 @@ const NewOfferForm = () => {
       await uploadOffer(form, finalDescription, imagesUrls, main_image.url);
 
       reset();
+      setMainImagePreview(null);
       setDescription("");
       setPendingImages([]);
       router.refresh();
@@ -57,6 +58,7 @@ const NewOfferForm = () => {
       alert(err.message);
     } finally {
       setLoading(false);
+      onSuccess();
     }
   }
 

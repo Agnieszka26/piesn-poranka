@@ -1,10 +1,11 @@
 import { OfferItem, OfferItemForm, PendingImage } from "@/app/dashboard/types";
 import Editor from "./Editor";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { supabase } from "@/app/dashboard/helpers/supabase-browser";
 import { replaceBlobImages, uploadImages, uploadMainImage } from "../utils";
+import { updateOfferAction } from "@/app/dashboard/actions";
 
 
 const EditOfferForm = ({ offer }: { offer: OfferItem }) => {
@@ -15,58 +16,62 @@ const EditOfferForm = ({ offer }: { offer: OfferItem }) => {
       main_image: offer.main_image,
     },
   });
-   const [mainImagePreview, setMainImagePreview] = useState<string | null>( offer.main_image);
+  const [mainImagePreview, setMainImagePreview] = useState<string>(
+    offer.main_image,
+  );
+  const [_, startTransition] = useTransition();
+  const [loading, setLoading] = useState(false);
+
   async function onUpdateOffer(form: OfferItemForm) {
     setLoading(true);
     try {
       const uploads = await uploadImages(pendingImages, supabase);
-        const main_image = await uploadMainImage(
-          form.file[0]
-            ? { id: "main_image", file: form.file[0] }
-            : { id: "", file: new File([], "") },
+      const newUrls = uploads.map((u) => u.url);
+
+      let finalMainImage = offer.main_image;
+
+      if (
+        mainImagePreview &&
+        mainImagePreview !== offer.main_image &&
+        form.file[0]
+      ) {
+        const uploadedMainImage = await uploadMainImage(
+          { id: "main_image", file: form.file[0] },
           supabase,
         );
-      const newUrls = uploads.map((u) => u.url);
+
+        finalMainImage = uploadedMainImage.url;
+        setMainImagePreview(uploadedMainImage.url);
+      }
 
       const finalDescription = replaceBlobImages(description, newUrls);
 
-      const allImages = [...(offer.images || []), ...newUrls];
+      const existingImages = Array.isArray(offer.images) ? offer.images : [];
+      const allImages = [...existingImages, ...newUrls];
 
-      await updateOffer(offer.id, form, finalDescription, allImages, mainImagePreview || offer.main_image);
+      startTransition(() =>
+        updateOfferAction({
+          ...offer,
+          title: form.title,
+          subtitle: form.subtitle,
+          description: finalDescription,
+          images: allImages,
+          main_image: finalMainImage,
+        }),
+      );
 
       router.refresh();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       alert(err.message);
-    } finally {
-      setLoading(false);
     }
+    setLoading(false);
   }
 
   const [description, setDescription] = useState(offer.description || "");
   const [pendingImages, setPendingImages] = useState<PendingImage[]>([]);
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
-  const updateOffer = async (
-    id: number,
-    form: OfferItemForm,
-    description: string,
-    imageUrls: string[] | null,
-    main_image: string,
-  ) => {
-    const { error } = await supabase
-      .from("offers")
-      .update({
-        title: form.title,
-        subtitle: form.subtitle,
-        description,
-        images: imageUrls,
-        main_image,
-      })
-      .eq("id", id);
 
-    if (error) throw error;
-  };
+  const router = useRouter();
   return (
     <>
       <h2 className="font-semibold mb-3">
