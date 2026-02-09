@@ -12,9 +12,13 @@ export const links = [
     label: "Okolica",
     href: "/view",
   },
+  {
+    label: "Wycieczki",
+    href: "/news",
+  },
 
   {
     label: "Kontakt",
-    href: "/#lokalizacja",
+    href: "/contact",
   },
 ];

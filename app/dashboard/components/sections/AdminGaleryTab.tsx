@@ -189,7 +189,7 @@ async function handleDragEnd(event: DragEndEvent) {
       newGallery.map((item, index) => ({ id: item.id, position: index + 1 }))
     ).catch((err) => console.error("Błąd aktualizacji galerii:", err));
   });
-}
+}` `
 
   return (
     <div className="py-4">

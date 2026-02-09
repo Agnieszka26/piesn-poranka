@@ -1,5 +1,5 @@
 "use client";
-import { createClient } from "@supabase/supabase-js";
+
 import GalleryPreview from "./components/sections/GalleryPreview";
 import Hero from "./components/sections/HeroArea";
 import LocationSection from "./components/sections/LocationSection/LocationSection";
@@ -9,10 +9,7 @@ import { useEffect, useState } from "react";
 import { GalleryItem, OfferItem, ReviewItem } from "../dashboard/types";
 import Features from "./components/sections/Features";
 import InfoSection from "./components/sections/InfoSection";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+import { supabase } from "../dashboard/helpers/supabase-browser";
 
 const preloadImages = (urls: string[]) => {
   return Promise.all(
