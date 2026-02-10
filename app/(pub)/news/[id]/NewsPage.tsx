@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import "dayjs/locale/pl";
-import { imageStylesDescription } from "@/app/dashboard/components/sections/AdminOfferTab/utils";
+import { imageStylesDescription } from "@/app/dashboard/components/sections/AdminNewsTab/utils";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";

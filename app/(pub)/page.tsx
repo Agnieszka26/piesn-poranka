@@ -6,7 +6,7 @@ import LocationSection from "./components/sections/LocationSection/LocationSecti
 import NewsSections from "./components/sections/NewsSections";
 import ReviewsSection from "./components/sections/ReviewsSections";
 import { useEffect, useState } from "react";
-import { GalleryItem, OfferItem, ReviewItem } from "../dashboard/types";
+import { GalleryItem, NewsItem, ReviewItem } from "../dashboard/types";
 import Features from "./components/sections/Features";
 import InfoSection from "./components/sections/InfoSection";
 import { supabase } from "../dashboard/helpers/supabase-browser";
@@ -28,13 +28,13 @@ export default function Home() {
   const [gallery, setGallery] = useState<GalleryItem[]>([]);
   const [images, setImages] = useState<string[]>([]);
   const [reviews, setReviews] = useState<ReviewItem[]>([]);
-  const [offers, setOffers] = useState<OfferItem[]>([]);
+  const [news, setNews] = useState<NewsItem[]>([]);
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
   async function getAllNews() {
     const data = await supabase.from("offers").select("*");
     if (data.error) return alert(data.error.message);
-    setOffers(data.data);
+    setNews(data.data);
   }
   async function getAllGallery() {
     const data = await supabase.from("gallery").select("*").order("position", { ascending: true });;
@@ -92,7 +92,7 @@ export default function Home() {
           <section className="w-full bg-white text-center" id="offers">
             <Features />
             <InfoSection />
-            <NewsSections offers={offers} />
+            <NewsSections news={news} />
           </section>
           <GalleryPreview galleryImages={gallery} />
           <ReviewsSection reviews={reviews} />

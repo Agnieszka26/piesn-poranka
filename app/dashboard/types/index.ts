@@ -15,7 +15,7 @@ export type ReviewItem = {
   inserted_at: string;
 };
 
-export type OfferItem = {
+export type NewsItem = {
   id: number;
   created_at: string;
   main_image: string;
@@ -37,6 +37,6 @@ export type PendingImage = {
   file: File;
 };
 
-export type OfferItemForm = OfferItem & {
+export type NewsItemForm = NewsItem & {
   file: FileList;
 };

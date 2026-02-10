@@ -1,23 +1,23 @@
 "use client";
 import React, { useEffect } from "react";
-import { OfferItem } from "../../../types";
-import OffersTable from "./molecules/Table";
+import { NewsItem } from "../../../types";
+import NewsTable from "./molecules/Table";
 import NewsSections from "@/app/(pub)/components/sections/NewsSections";
 import { supabase } from "../../../helpers/supabase-browser";
-import NewOfferForm from "./molecules/NewOfferForm";
+import NewNewsForm from "./molecules/NewNewsForm";
 import { Modal } from "./molecules/Modal";
-import EditOfferForm from "./molecules/EditOfferForm";
+import EditNewsForm from "./molecules/EditNewsForm";
 import toast from "react-hot-toast";
 
 
-const AdminOfferTab = () => {
-  const [offers, setOffers] = React.useState<OfferItem[] | null>(null);
+const AdminNewsTab = () => {
+  const [news, setNews] = React.useState<NewsItem[] | null>(null);
   const [loading, setLoading] = React.useState(false);
-  const [selectedOffer, setSelectedOffer] = React.useState<OfferItem | null>(
+  const [selectedNews, setSelectedNews] = React.useState<NewsItem | null>(
     null,
   );
 
-async function deleteOffer(
+async function deleteNews(
   id: number,
   paths: string | string[] | null,
   main_image: string
@@ -46,7 +46,7 @@ async function deleteOffer(
       if (rmErr) throw rmErr;
     }
 
-    setOffers((prev) => prev && prev.filter((x) => x.id !== id));
+    setNews((prev) => prev && prev.filter((x) => x.id !== id));
 
     toast.success("Oferta została usunięta 🗑️", { id: toastId });
     
@@ -60,44 +60,44 @@ async function deleteOffer(
   }
 }
 
-  async function getAllOffers() {
+  async function getAllNewss() {
     const { data, error } = await supabase
       .from("offers")
       .select("*")
       .order("id", { ascending: false });
     if (error) return alert(error.message);
-    setOffers(data);
+    setNews(data);
   }
 
   useEffect(() => {
     async function fetchData() {
-      await getAllOffers();
+      await getAllNewss();
     }
     fetchData();
   }, []);
   return (
     <div>
-      <NewOfferForm onSuccess={getAllOffers} />
-      {selectedOffer && (
-        <Modal onClose={() => setSelectedOffer(null)}>
-          <EditOfferForm offer={selectedOffer} />
+      <NewNewsForm onSuccess={getAllNewss} />
+      {selectedNews && (
+        <Modal onClose={() => setSelectedNews(null)}>
+          <EditNewsForm news={selectedNews} />
         </Modal>
       )}
       {loading ? (
         <p>Usuwanie...</p>
       ) : (
-        offers && (
-          <OffersTable
-            initialData={offers}
-            deleteOffer={deleteOffer}
-            onEditOffer={setSelectedOffer}
+        news && (
+          <NewsTable
+            initialData={news}
+            deleteNews={deleteNews}
+            onEditNews={setSelectedNews}
           />
         )
       )}
       <p className="text-center my-6 text-2xl">Podgląd: </p>
-      {offers && <NewsSections offers={offers} />}
+      {news && <NewsSections news={news} />}
     </div>
   );
 };
 
-export default AdminOfferTab;
+export default AdminNewsTab;

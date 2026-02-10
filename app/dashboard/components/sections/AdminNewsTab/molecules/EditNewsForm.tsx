@@ -1,4 +1,4 @@
-import { OfferItem, OfferItemForm, PendingImage } from "@/app/dashboard/types";
+import { NewsItem, NewsItemForm, PendingImage } from "@/app/dashboard/types";
 import Editor from "./Editor";
 import { useRouter } from "next/navigation";
 import React, { useState, useTransition } from "react";
@@ -7,31 +7,31 @@ import { supabase } from "@/app/dashboard/helpers/supabase-browser";
 import { replaceBlobImages, uploadImages, uploadMainImage } from "../utils";
 import { updateOfferAction } from "@/app/dashboard/actions";
 
-const EditOfferForm = ({ offer }: { offer: OfferItem }) => {
-  const { register, handleSubmit } = useForm<OfferItemForm>({
+const EditOfferForm = ({ news }: { news: NewsItem }) => {
+  const { register, handleSubmit } = useForm<NewsItemForm>({
     defaultValues: {
-      title: offer.title,
-      subtitle: offer.subtitle,
-      main_image: offer.main_image,
+      title: news.title,
+      subtitle: news.subtitle,
+      main_image: news.main_image,
     },
   });
   const [mainImagePreview, setMainImagePreview] = useState<string>(
-    offer.main_image,
+    news.main_image,
   );
   const [_, startTransition] = useTransition();
   const [loading, setLoading] = useState(false);
 
-  async function onUpdateOffer(form: OfferItemForm) {
+  async function onUpdateOffer(form: NewsItemForm) {
     setLoading(true);
     try {
       const uploads = await uploadImages(pendingImages, supabase);
       const newUrls = uploads.map((u) => u.url);
 
-      let finalMainImage = offer.main_image;
+      let finalMainImage = news.main_image;
 
       if (
         mainImagePreview &&
-        mainImagePreview !== offer.main_image &&
+        mainImagePreview !== news.main_image &&
         form.file[0]
       ) {
         const uploadedMainImage = await uploadMainImage(
@@ -45,12 +45,12 @@ const EditOfferForm = ({ offer }: { offer: OfferItem }) => {
 
       const finalDescription = replaceBlobImages(description, newUrls);
 
-      const existingImages = Array.isArray(offer.images) ? offer.images : [];
+      const existingImages = Array.isArray(news.images) ? news.images : [];
       const allImages = [...existingImages, ...newUrls];
 
       startTransition(() =>
         updateOfferAction({
-          ...offer,
+          ...news,
           title: form.title,
           subtitle: form.subtitle,
           description: finalDescription,
@@ -67,7 +67,7 @@ const EditOfferForm = ({ offer }: { offer: OfferItem }) => {
     setLoading(false);
   }
 
-  const [description, setDescription] = useState(offer.description || "");
+  const [description, setDescription] = useState(news.description || "");
   const [pendingImages, setPendingImages] = useState<PendingImage[]>([]);
 
   const router = useRouter();

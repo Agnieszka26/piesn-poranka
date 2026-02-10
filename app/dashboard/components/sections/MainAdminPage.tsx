@@ -3,7 +3,7 @@ import { useState } from "react";
 import AdminGalleryTab from "../../components/sections/AdminGaleryTab";
 import ButtonTab from "../../components/atoms/ButtonTab";
 import AdminReviewTab from "../../components/sections/AdminReviewTab";
-import AdminOfferTab from "./AdminOfferTab/AdminOfferTab";
+import AdminOfferTab from "./AdminNewsTab/AdminNewsTab";
 import AdminCalendarTab from "../../components/sections/AdminCalendarTab";
 import { redirect } from "next/navigation";
 import AdminBackgroundTab from "./AdminBackgroundTab";

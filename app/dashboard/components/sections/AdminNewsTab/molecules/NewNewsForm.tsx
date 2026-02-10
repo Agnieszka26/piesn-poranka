@@ -1,5 +1,5 @@
 import { supabase } from "@/app/dashboard/helpers/supabase-browser";
-import { OfferItemForm, PendingImage } from "@/app/dashboard/types";
+import { NewsItemForm, PendingImage } from "@/app/dashboard/types";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Editor from "./Editor";
@@ -7,8 +7,8 @@ import { replaceBlobImages, uploadImages, uploadMainImage } from "../utils";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-const uploadOffer = async (
-  form: OfferItemForm,
+const uploadNews = async (
+  form: NewsItemForm,
   description: string,
   imageUrls: string[] | null,
   main_image: string,
@@ -24,8 +24,8 @@ const uploadOffer = async (
   if (error) throw error;
 };
 
-const NewOfferForm = ({ onSuccess }: { onSuccess: () => void }) => {
-  const { register, handleSubmit, reset} = useForm<OfferItemForm>();
+const NewNewsForm = ({ onSuccess }: { onSuccess: () => void }) => {
+  const { register, handleSubmit, reset} = useForm<NewsItemForm>();
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [pendingImages, setPendingImages] = useState<PendingImage[]>([]);
@@ -34,7 +34,7 @@ const NewOfferForm = ({ onSuccess }: { onSuccess: () => void }) => {
 
 
 
-  async function onUploadOffer(form: OfferItemForm) {
+  async function onUploadNews(form: NewsItemForm) {
   const toastId = toast.loading("Dodawanie posta...");
 
   setLoading(true);
@@ -51,7 +51,7 @@ const NewOfferForm = ({ onSuccess }: { onSuccess: () => void }) => {
     const imagesUrls = uploads.map((u) => u.url);
     const finalDescription = replaceBlobImages(description, imagesUrls);
 
-    await uploadOffer(form, finalDescription, imagesUrls, main_image.url);
+    await uploadNews(form, finalDescription, imagesUrls, main_image.url);
 
     reset();
     setMainImagePreview(null);
@@ -80,7 +80,7 @@ const NewOfferForm = ({ onSuccess }: { onSuccess: () => void }) => {
       </h2>
 
         <form
-          onSubmit={handleSubmit(onUploadOffer)}
+          onSubmit={handleSubmit(onUploadNews)}
           className="flex flex-col gap-2"
         >
           <input
@@ -132,4 +132,4 @@ const NewOfferForm = ({ onSuccess }: { onSuccess: () => void }) => {
   );
 };
 
-export default NewOfferForm;
+export default NewNewsForm;
