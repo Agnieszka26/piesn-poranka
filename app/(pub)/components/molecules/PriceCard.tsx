@@ -53,10 +53,9 @@ export default function PriceCard({
             <p className="text-sm line-through text-gray-400">{oldPrice} zł</p>
           )}
 
-          <p className="text-2xl font-bold">{price} zł</p>
+          {price && <p className="text-2xl font-bold">{price} zł</p>}
 
           <p className="text-xs text-gray-500">{priceInfo}</p>
-
           <p className="text-xs text-gray-600 mt-2">{availability}</p>
         </div>
       </div>

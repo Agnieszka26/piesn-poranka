@@ -7,7 +7,6 @@ import { supabase } from "@/app/dashboard/helpers/supabase-browser";
 import { replaceBlobImages, uploadImages, uploadMainImage } from "../utils";
 import { updateOfferAction } from "@/app/dashboard/actions";
 
-
 const EditOfferForm = ({ offer }: { offer: OfferItem }) => {
   const { register, handleSubmit } = useForm<OfferItemForm>({
     defaultValues: {
@@ -74,9 +73,7 @@ const EditOfferForm = ({ offer }: { offer: OfferItem }) => {
   const router = useRouter();
   return (
     <>
-      <h2 className="font-semibold mb-3">
-        Utwórz nowy post, który będzie się wyświetlał na stronie.
-      </h2>
+      <h2 className="font-semibold mb-3">Edytuj post.</h2>
       {loading ? (
         <p>Zapisywanie zmian...</p>
       ) : (

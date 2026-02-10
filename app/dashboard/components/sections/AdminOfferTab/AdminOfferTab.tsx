@@ -75,7 +75,6 @@ async function deleteOffer(
     }
     fetchData();
   }, []);
-
   return (
     <div>
       <NewOfferForm onSuccess={getAllOffers} />

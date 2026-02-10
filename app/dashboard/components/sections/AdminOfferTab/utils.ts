@@ -29,12 +29,12 @@ export const uploadImages = async (
 
     if (error) throw error;
 
-    const { data: signed } = await supabase.storage
+    const { data: publicImage } = await supabase.storage
       .from("offers-images")
-      .createSignedUrl(data.path, 360000);
+      .getPublicUrl(data.path);
 
-    if (signed?.signedUrl) {
-      uploaded.push({ id, url: signed.signedUrl });
+    if (publicImage?.publicUrl) {
+      uploaded.push({ id, url: publicImage.publicUrl });
     }
   }
 
@@ -53,12 +53,12 @@ export const uploadMainImage = async (
 
   if (error) throw error;
 
-  const { data: signed } = await supabase.storage
+  const { data: publicImage } = await supabase.storage
     .from("offers-images")
-    .createSignedUrl(data.path, 360000);
+    .getPublicUrl(data.path);
 
-  if (signed?.signedUrl) {
-    return { id, url: signed.signedUrl };
+  if (publicImage?.publicUrl) {
+    return { id, url: publicImage.publicUrl };
   }
     return { id, url: "" };
 };

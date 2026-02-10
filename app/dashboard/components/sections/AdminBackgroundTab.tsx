@@ -49,9 +49,8 @@ const AdminBackgroundTab = () => {
 
     const { path } = fileStorage;
     const { data: url } = await supabase.storage
-      .from("hero-images")
-      .createSignedUrl(path, 360000);
-    const publicPhotoUrl = url?.signedUrl;
+      .from("hero-images").getPublicUrl(path)
+    const publicPhotoUrl = url?.publicUrl;
     // store metadata
     const { data, error } = await supabase
       .from("hero_background")
