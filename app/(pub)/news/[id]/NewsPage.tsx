@@ -1,6 +1,6 @@
 "use client";
 
-import { OfferItem } from "@/app/dashboard/types";
+import { NewsItem } from "@/app/dashboard/types";
 import { createClient } from "@supabase/supabase-js";
 import dayjs from "dayjs";
 import Image from "next/image";
@@ -19,7 +19,7 @@ function timeAgo(dateString: string) {
 }
 
 const NewsPage = ({ id }: { id: string }) => {
-  const [offer, setOffer] = useState<OfferItem | null>(null);
+  const [offer, setOffer] = useState<NewsItem | null>(null);
 
   async function getOffer() {
     const { data, error } = await supabase

@@ -1,9 +1,9 @@
 // components/ArticleCard.jsx
-import { OfferItem } from "@/app/dashboard/types";
+import { NewsItem} from "@/app/dashboard/types";
 import Image from "next/image";
 import { imageStylesDescription } from "../utils";
 
-const ArticleCard = ({ created_at, title, subtitle, description,main_image }: OfferItem) => {
+const ArticleCard = ({ created_at, title, subtitle, description,main_image }: NewsItem) => {
   return (
     <div className="flex space-x-4 items-start p-4 bg-white rounded-lg">
       {/* Obrazek */}

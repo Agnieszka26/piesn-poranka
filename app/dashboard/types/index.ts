@@ -40,3 +40,26 @@ export type PendingImage = {
 export type NewsItemForm = NewsItem & {
   file: FileList;
 };
+
+export type PriceItem = {
+  key: PriceKey;
+  id: number;
+  date: string;
+  name: string;
+  price: number;
+  oldPrice: number | null; 
+}
+
+export type PriceKey =
+  | "SEZON_NISKI"
+  | "FERIE_ZIMOWE"
+  | "WIELKANOC"
+  | "MAJOWKA"
+  | "CZERWCOWKA"
+  | "WAKACJE"
+  | "BOZE_NARODZENIE"
+  | "SYLWESTER"
+  | "TRZECH_KROLI"
+  | "JACUZZI"
+  | "ZWIERZETA"
+  | "RABATY";

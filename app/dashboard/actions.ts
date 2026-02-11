@@ -1,7 +1,7 @@
 "use server";
 
 import { createSupabaseServerClient } from "./helpers/supabase-server";
-import { OfferItem } from "./types";
+import { NewsItem } from "./types";
 
 export async function signInAction(formData: FormData) {
   const email = formData.get("email") as string;
@@ -26,7 +26,7 @@ export async function signInAction(formData: FormData) {
   }
 }
 
-export async function updateOfferAction(input: OfferItem) {
+export async function updateOfferAction(input: NewsItem) {
   const supabase = createSupabaseServerClient();
 
   const { id, ...data } = input;
@@ -55,7 +55,9 @@ export const changeStatusAction = async (
   }
 };
 
-export async function updateGalleryPositions(items: { id: number; position: number }[]) {
+export async function updateGalleryPositions(
+  items: { id: number; position: number }[],
+) {
   const supabase = createSupabaseServerClient();
   for (const item of items) {
     const { error } = await supabase
@@ -69,4 +71,30 @@ export async function updateGalleryPositions(items: { id: number; position: numb
     }
   }
   return true;
+}
+
+export async function updatePriceAction(
+  key: string,
+  date?: string,
+  price?: number,
+  oldPrice?: number | null,
+) {
+  const supabase = createSupabaseServerClient();
+ const updates: Record<string, unknown> = {};
+  if (date !== undefined) updates.date = date;
+  if (price !== undefined) updates.price = price;
+  if (oldPrice !== undefined) updates.oldPrice = oldPrice;
+
+  // Jeśli nie ma żadnych zmian, nie robimy update
+  if (Object.keys(updates).length === 0) return false;
+
+  const { data, error } = await supabase
+    .from("prices")
+    .update(updates)
+    .eq("key", key);
+     if (error) {
+        console.error("Błąd aktualizacji pozycji:", error.message);
+      throw new Error(error.message);
+     }
+     return true;
 }
