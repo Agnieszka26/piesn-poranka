@@ -19,8 +19,6 @@ import {
 import {
   arrayMove,
   SortableContext,
-  sortableKeyboardCoordinates,
-  verticalListSortingStrategy,
   horizontalListSortingStrategy,
   useSortable,
 } from "@dnd-kit/sortable";
@@ -55,9 +53,15 @@ function SortableGalleryItem({
       ref={setNodeRef}
       style={style}
       {...attributes}
-      {...listeners}
+     
       className="border rounded overflow-hidden"
     >
+      <div
+  {...listeners}
+  className="cursor-grab bg-gray-100 text-center text-sm py-1"
+>
+  ⠿ Przeciągnij
+</div>
       {item.image_url ? (
         <Image
           src={item.image_url}
@@ -113,8 +117,8 @@ const AdminGalleryTab = () => {
     const { path } = fileStorage;
     const { data: url } = await supabase.storage
       .from("gallery-images")
-      .createSignedUrl(path, 360000);
-    const publicPhotoUrl = url?.signedUrl;
+      .getPublicUrl(path)
+    const publicPhotoUrl = url?.publicUrl;
 
     const { data: last } = await supabase
       .from("gallery")
@@ -143,6 +147,7 @@ const AdminGalleryTab = () => {
   }
 
   async function deleteGallery(id: number, path: string) {
+    console.log("deleting", id, path);
     if (!confirm("Usuń zdjęcie?")) return;
     setLoading(true);
     const { error } = await supabase.from("gallery").delete().eq("id", id);

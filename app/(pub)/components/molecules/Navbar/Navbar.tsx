@@ -69,17 +69,7 @@ export default function Navbar() {
               className={`w-56 h-16  ${scrolled ? "invert" : ""}`}
             />
           </Link>
-          {/* <Image src={ logo} alt={"logo"} className="w-24 h-24"/>
-          <p >
-           <span className="text-2xl  tracking-wider font-normal mb-2 drop-shadow-lg">
-            
-            {general.title}
-            </span> 
-            <br />
-            <span className="font-qwigley tracking-wider text-xl">
-              {general.slogan}
-            </span>
-            </p> */}
+       
         </div>
 
         {/* Menu desktopowe */}

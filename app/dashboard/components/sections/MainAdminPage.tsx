@@ -3,13 +3,14 @@ import { useState } from "react";
 import AdminGalleryTab from "../../components/sections/AdminGaleryTab";
 import ButtonTab from "../../components/atoms/ButtonTab";
 import AdminReviewTab from "../../components/sections/AdminReviewTab";
-import AdminOfferTab from "./AdminOfferTab/AdminOfferTab";
+import AdminOfferTab from "./AdminNewsTab/AdminNewsTab";
 import AdminCalendarTab from "../../components/sections/AdminCalendarTab";
 import { redirect } from "next/navigation";
 import AdminBackgroundTab from "./AdminBackgroundTab";
+import AdminPriceTab from "./AdminPriceTab";
 
 export default function MainAdminPage() {
-  const [activeTab, setActiveTab] = useState("wieści");
+  const [activeTab, setActiveTab] = useState("cennik");
   async function signOut() {
   await fetch('/auth/logout', {
       method: 'POST',
@@ -50,6 +51,11 @@ export default function MainAdminPage() {
           activeTab={activeTab}
           label={"wieści"}
         />
+                <ButtonTab
+          onClick={() => setActiveTab("cennik")}
+          activeTab={activeTab}
+          label={"cennik"}
+        />
       </div>
 
       {/* CONTENT */}
@@ -63,6 +69,7 @@ export default function MainAdminPage() {
         {activeTab === "galeria" && <AdminGalleryTab />}
         {activeTab === "opinie" && <AdminReviewTab  />}
         {activeTab === "wieści" && <AdminOfferTab />}
+        {activeTab === "cennik" && <AdminPriceTab />}
       </div>
     </div>
   );

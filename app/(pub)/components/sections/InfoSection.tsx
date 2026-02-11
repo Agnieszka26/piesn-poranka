@@ -1,87 +1,80 @@
 import { motion } from "framer-motion";
 import Image, { StaticImageData } from "next/image";
-import jakuzziidomek from "../../assets/images/jakuzziidomek.jpg";
-import wnetrze from "../../assets/images/wnterze2.jpg";
+import wnetrze3 from "../../assets/images/wnetrze4.jpg";
 import czerwcowka from "../../assets/images/czerwcowka.jpg";
-import bozenarodzenie from "../../assets/images/bozenarodzenie.jpg";
-import sezonniski from "../../assets/images/sezonniski.jpg";
+import wakacje from "../../assets/images/wakacje.jpg";
+import dlaRodzin from "../../assets/images/dlaRodzin.jpg";
+import widoknagory from "../../assets/images/widoknagory2.png";
 import clsx from "clsx";
 const infoTexts = [
   {
-    title: "Domek w górach",
-    content: `Szukasz miejsca, w którym naprawdę zwolnisz? Chcesz obudzić się przy śpiewie ptaków, z widokiem na góry i zapachem lasu za oknem? Pieśń Poranka to wyjątkowy domek w sercu natury, stworzony z myślą o tych, którzy pragną odpoczynku blisko przyrody, z dala od zgiełku miasta.
-
-To idealne miejsce zarówno na romantyczny weekend, rodzinny wyjazd, jak i dłuższy pobyt regeneracyjny. Kameralna atmosfera, komfortowe wnętrza i otoczenie górskich krajobrazów sprawiają, że każda pora roku ma tu swój niepowtarzalny urok.
-
-Odkryj miejsce, do którego chce się wracać.`,
-    image: jakuzziidomek,
+    title: "Domek w górach, w którym zwalniasz od pierwszego poranka",
+    content: `Są miejsca, w których od razu czujesz, że możesz odetchnąć.
+ Budzisz się przy wschodzącym słońcu, a zamiast hałasu słyszysz śpiew ptaków i ciszę gór.
+ Przez okno wpada światło, a przed Tobą rozciąga się widok, który uspokaja myśli.
+Pieśń Poranka powstała właśnie z tych chwil – z poranków pełnych światła, spokoju i natury.
+ To domek w Beskidzie Małym, położony wysoko, na 740 m n.p.m., z dala od zgiełku, ale blisko tego, co naprawdę ważne.
+Odkryj miejsce, do którego chce się wracać.
+`,
+    image: czerwcowka,
   },
 
   {
     title: "Dla rodzin i bliskich sobie ludzi",
-    content: `Pieśń Poranka to przestrzeń przyjazna rodzinom, parom i grupom przyjaciół, którzy chcą spędzić czas razem, w rytmie natury. Bezpieczne otoczenie, bliskość szlaków spacerowych i górskich atrakcji sprzyjają wspólnym chwilom, zabawie i odpoczynkowi.
-
-Dzieci mogą odkrywać świat przyrody, a dorośli cieszyć się ciszą, świeżym powietrzem i widokami, które uspokajają myśli. To miejsce, w którym budują się wspomnienia – przy porannej kawie na tarasie, wieczornym ognisku czy wspólnych wędrówkach po górach.
-
-Podaruj sobie i swoim bliskim prawdziwy górski wypoczynek.`,
-    image: wnetrze,
+    content: `Pieśń Poranka to przestrzeń stworzona z myślą o wspólnym czasie.
+ O rodzinnych wyjazdach, spokojnych pobytach seniorów i weekendach we dwoje.
+Domek komfortowo gości 5–7 osób, oferując dwie sypialnie i jasny salon z dużymi oknami.
+ Dzieci mają tu bezpieczne podwórko, plac zabaw i przestrzeń do swobodnej zabawy, a dorośli mogą zwolnić –
+ bez pośpiechu, bez hałasu, bez imprez.
+To dom, w którym łatwo być razem.
+`,
+    image: dlaRodzin,
   },
   {
-    title: "Relaks w zgodzie z naturą",
-    content: `Pobyt w Pieśni Poranka to zaproszenie do prawdziwego relaksu. Otaczająca domek przyroda, śpiew ptaków o poranku i kojąca cisza wieczorów pozwalają odzyskać wewnętrzną równowagę.
+    title: "Jasne wnętrza, ciepło i widok, który zostaje w pamięci",
+    content: `Wnętrze łączy górski charakter z przestrzenią i światłem.
+ Białe sufity, duże przeszklenia i widoki na Babią Górę, Pilsko, a przy dobrej widoczności także Tatry sprawiają, że domek jest jasny i przytulny o każdej porze roku.
+O komfort cieplny dbają:
+kominek na pellet,
 
-To idealne miejsce na zwolnienie tempa – z książką, herbatą, rozmową lub po prostu z widokiem na góry. Niezależnie od pory roku, natura staje się tu najlepszym towarzyszem wypoczynku.
 
-Oddychaj głęboko. Tu wszystko płynie wolniej.`,
-    image: czerwcowka,
+ogrzewanie podłogowe,
+
+
+ogrzewanie na podczerwień.
+
+
+To miejsce, w którym szybko robi się ciepło –
+ nie tylko fizycznie, ale i po prostu „po ludzku”.
+`,
+    image: wnetrze3,
   },
   {
-    title: "Udogodnienia – komfortowy, całoroczny domek w górach",
-    content: `Pieśń Poranka to komfortowy, całoroczny domek w górach, położony w cichej i spokojnej okolicy, z dala od miejskiego hałasu. To idealne miejsce na wypoczynek w Beskidach dla osób szukających ciszy, prywatności i bliskości natury.
-
-Z okien oraz tarasu rozciągają się piękne widoki na góry, które zachwycają o każdej porze roku. Domek jest przystosowany do pobytów zarówno letnich, jak i zimowych – w chłodniejsze dni przytulną atmosferę zapewnia kominek, a w upalne dni komfort zwiększa klimatyzacja.
-
-Na Gości czeka prywatna strefa relaksu, idealna do regeneracji po dniu spędzonym na szlaku:
-
-jacuzzi,
-
-taras wypoczynkowy,
-
-hamak,
-
-miejsce na ognisko i grill,
-
-plac zabaw dla dzieci.
-
-Wysoki standard wyposażenia sprawia, że domek w górach z jacuzzi spełnia oczekiwania nawet najbardziej wymagających Gości. Do dyspozycji jest m.in. pralka, zmywarka, ekspres do kawy oraz pełne wyposażenie umożliwiające komfortowy, dłuższy pobyt.
-
-Bliskość natury, kameralna atmosfera i nowoczesne udogodnienia tworzą idealne warunki do wypoczynku przez cały rok.`,
-    image: bozenarodzenie,
+    title: "Prywatna strefa relaksu z widokiem na góry",
+    content: `Na zewnątrz czeka przestrzeń, która naturalnie zaprasza do odpoczynku.
+ Taras z widokiem na góry, hamak, miejsce na ognisko i grill oraz całoroczne, prywatne jacuzzi, dostępne wyłącznie dla Gości domku.
+Zanurzenie się w ciepłej wodzie, gdy przed Tobą rozciąga się górski horyzont, to chwile, które zostają w pamięci na długo.
+ Tu wieczory są ciche, a czas płynie wolniej.
+`,
+    image: widoknagory,
   },
   {
-    title: "Atrakcje w okolicy – Beskidy o każdej porze roku",
-    content: `Położenie domku Pieśń Poranka sprzyja aktywnemu wypoczynkowi i odkrywaniu uroków Beskidów. Bliskość szlaków turystycznych umożliwia piesze wędrówki i spacery w otoczeniu górskiej przyrody bez konieczności długich dojazdów.
+    title: "Blisko natury, ale z wygodą na co dzień",
+    content: `Domek położony jest tuż przy łąkach i szlakach turystycznych, w luźnej zabudowie, niemal na odludziu –
+ ale bez poczucia izolacji.
+W kilka minut dojedziesz do restauracji, a w krótkim czasie:
+nad Jezioro Żywieckie,
 
-Atrakcje letnie:
 
-około 20 minut samochodem do Jeziora Żywieckiego, plaży miejskiej oraz wypożyczalni sprzętu wodnego,
+na trasy rowerowe i szlaki piesze,
 
-Rynek w Żywcu z licznymi restauracjami i kawiarniami,
 
-Skansen w Ślemieniu – idealny na rodzinny wypad,
+do ośrodków narciarskich i atrakcji regionu.
 
-Park Inwałd i inne atrakcje turystyczne regionu.
 
-Atrakcje zimowe:
-
-sąsiedztwo górek idealnych do zjeżdżania na sankach,
-
-tereny doskonałe do narciarstwa biegowego,
-
-łatwy dojazd do popularnych stoków narciarskich: Góra Żar oraz Czarny Groń.
-
-Niezależnie od pory roku, nocleg w górach w okolicy Żywca to doskonała baza wypadowa zarówno dla miłośników aktywnego wypoczynku, jak i osób szukających spokojnego miejsca na regenerację.`,
-    image: sezonniski,
+Pieśń Poranka to miejsce dla tych, którzy chcą odpocząć blisko natury,
+ nie rezygnując z komfortu i dobrze przemyślanej przestrzeni.
+`,    image: wakacje,
   },
 ];
 
@@ -104,7 +97,7 @@ const InfoElement = ({
         className={clsx(
           "mx-auto max-w-7xl px-6 grid gap-12 items-center",
           "grid-cols-1 lg:grid-cols-2",
-          isReversed && "lg:[&>*:first-child]:order-2"
+          isReversed && "lg:[&>*:first-child]:order-2",
         )}
       >
         {/* TEXT */}
@@ -114,9 +107,21 @@ const InfoElement = ({
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2  className={clsx("text-2xl md:text-4xl mt-12 font-light mb-6", isReversed ? "md:text-left" : "md:text-right")}>{title}</h2>
+          <h2
+            className={clsx(
+              "text-2xl md:text-4xl mt-12 font-light mb-6",
+              isReversed ? "md:text-left" : "md:text-right",
+            )}
+          >
+            {title}
+          </h2>
 
-          <p className={clsx("text-gray-600 leading-relaxed max-w-xl mb-8", isReversed ? "md:text-left" : "md:text-right")}>
+          <p
+            className={clsx(
+              "text-gray-600 leading-relaxed max-w-xl mb-8",
+              isReversed ? "md:text-left" : "md:text-right",
+            )}
+          >
             {content}
           </p>
         </motion.div>

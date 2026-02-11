@@ -35,6 +35,12 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/storage/v1/object/public/gallery-images/**",
       },
+            {
+        protocol: "https",
+        hostname: "vumsqpbytakgvqprzfmn.supabase.co",
+        port: "",
+        pathname: "/storage/v1/object/public/offers-images/**",
+      },
       {
         protocol: "https",
         hostname: "vumsqpbytakgvqprzfmn.supabase.co",
@@ -46,6 +52,12 @@ const nextConfig: NextConfig = {
         hostname: "vumsqpbytakgvqprzfmn.supabase.co",
         port: "",
         pathname: "/storage/v1/object/sign/hero-images/**"
+      },
+                  {
+        protocol: "https",
+        hostname: "vumsqpbytakgvqprzfmn.supabase.co",
+        port: "",
+        pathname: "/storage/v1/object/public/hero-images/**"
       },
     ],
   },

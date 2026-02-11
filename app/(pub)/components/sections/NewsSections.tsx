@@ -1,22 +1,22 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { OfferItem } from "@/app/dashboard/types";
+import { NewsItem } from "@/app/dashboard/types";
 
 
-export default function NewsSections({ offers }: { offers: OfferItem[] }) {
+export default function NewsSections({ news }: { news: NewsItem[] }) {
 
 
   return (
     <div className="py-20">
       <h2 className="text-3xl mb-10 text-center">
-        Wieści z &quot;Pieśni Poranka&quot;
+        Wycieczki z &quot;Pieśni Poranka&quot;
       </h2>
 
       <div className="relative flex items-center justify-center max-w-6xl mx-auto">
         {/* Karty ofert */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-10">
-          {offers.map(({ id, title, main_image }) => (
+          {news.map(({ id, title, main_image }) => (
             <div
               key={id}
               className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition"
@@ -42,15 +42,9 @@ export default function NewsSections({ offers }: { offers: OfferItem[] }) {
             </div>
           ))}
         </div>
-
-        {/* Prawy przycisk */}
       </div>
 
-      <div className="mt-12 flex justify-center">
-        <button className="mx-auto px-6 py-3 rounded-full bg-white border border-gray-300 text-gray-800 hover:bg-gray-100">
-          ZOBACZ WSZYSTKIE OFERTY
-        </button>
-      </div>
+
     </div>
   );
 }
