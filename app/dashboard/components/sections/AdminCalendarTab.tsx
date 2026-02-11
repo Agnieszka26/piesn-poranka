@@ -4,6 +4,7 @@ import { DateRange, DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { pl } from "react-day-picker/locale";
 import { supabase } from "../../helpers/supabase-browser";
+import toast from "react-hot-toast";
 
 type CalendarRow = {
   id: number;
@@ -15,12 +16,8 @@ type BookedRange = DateRange & { id: number };
 const AdminCalendarTab = () => {
   const [range, setRange] = useState<DateRange | undefined>();
   const [bookedRanges, setBookedRanges] = useState<BookedRange[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
   const today = new Date();
 
-  /* ------------------ FETCH ZAKRESÓW Z BAZY ------------------ */
   const getRanges = async () => {
     const { data, error } = await supabase
       .from("calendar")
@@ -29,7 +26,7 @@ const AdminCalendarTab = () => {
       .order("date_from", { ascending: true });
 
     if (error) {
-      setError(error.message);
+      toast.error("Błąd przy pobiorze danych z bazy. ⛔");
       return;
     }
 
@@ -49,16 +46,12 @@ const AdminCalendarTab = () => {
     fetchData();
   }, []);
 
-  /* ------------------ DNI ZABLOKOWANE ------------------ */
   const disabledDays = useMemo(() => bookedRanges, [bookedRanges]);
 
-  /* ------------------ ZAPIS NOWEGO ZAKRESU ------------------ */
-  const saveRange = async () => {
-    if (!range?.from || !range?.to) return;
 
-    setLoading(true);
-    setError(null);
-    setSuccess(false);
+  const saveRange = async () => {
+    const toastId = toast.loading("Zapisywanie...");
+    if (!range?.from || !range?.to) return;
 
     const { error } = await supabase.from("calendar").insert({
       date_from: range.from.toISOString(),
@@ -67,27 +60,24 @@ const AdminCalendarTab = () => {
     });
 
     if (error) {
-      setError(error.message);
+      toast.error(error.message ?? "Coś poszło nie tak", { id: toastId });
     } else {
-      setSuccess(true);
+      toast.success("Zakres zapisany ✅", { id: toastId });
       setRange(undefined);
       await getRanges();
     }
-
-    setLoading(false);
   };
 
   const deleteRange = async (id: number) => {
-    setLoading(true);
+    const toastId = toast.loading("Zapisywanie...");
     const { error } = await supabase.from("calendar").delete().eq("id", id);
 
     if (error) {
-      setError(error.message);
+      toast.error(error.message ?? "Coś poszło nie tak ⛔", { id: toastId });
     } else {
+      toast.success("Zakres usunięty 🗑️", { id: toastId });
       await getRanges();
     }
-
-    setLoading(false);
   };
   return (
     <div className="pt-12">
@@ -116,16 +106,11 @@ const AdminCalendarTab = () => {
           {range.to?.toLocaleDateString("pl")}
         </p>
       )}
-      <button
+    {range?.from   && <button
         onClick={saveRange}
-        disabled={!range?.from || !range?.to || loading}
+        disabled={!range?.from || !range?.to}
         className="m-4 px-4 py-2 rounded-xl bg-blue-500 text-white disabled:bg-gray-300 disabled:opacity-60"
-      >
-        {loading ? "Zapisywanie..." : "Zapisz zakres"}
-      </button>
-
-      {error && <p className="text-red-500 mx-4">{error}</p>}
-      {success && <p className="text-white mx-4">Zakres zapisany ✅</p>}
+      >Zapisz zakres</button>}
 
       <p className="mt-6 mb-2 text-white mx-4 text-xl ">Zabookowane daty: </p>
       <ul className="text-white  mx-4">

@@ -43,10 +43,6 @@ export default function AdminPriceTab() {
       }
     });
 
-    startTransition(async () => {
-      updatePriceAction(row.key, row.date, row.price, row.oldPrice);
-    });
-
   }
 
   useEffect(() => {

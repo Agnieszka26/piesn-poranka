@@ -1,7 +1,7 @@
 import { NewsItem, NewsItemForm, PendingImage } from "@/app/dashboard/types";
 import Editor from "./Editor";
 import { useRouter } from "next/navigation";
-import React, { useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { supabase } from "@/app/dashboard/helpers/supabase-browser";
 import { replaceBlobImages, uploadImages, uploadMainImage } from "../utils";
