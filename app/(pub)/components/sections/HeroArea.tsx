@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import AvailabilityCalendar from "../molecules/AvailabilityCalendar";
 import { texts } from "../../assets/texts/texts";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function Hero({ imgs }: { imgs: string[] }) {
   const general = texts.general;
@@ -32,22 +33,23 @@ export default function Hero({ imgs }: { imgs: string[] }) {
 
   return (
     <section
-      className="relative h-screen md:min-h-[600px]  flex items-center justify-center text-white overflow-hidden"
+      className="relative min-h-svh flex items-center justify-center text-white overflow-hidden"
       aria-label={`Hero — ${general.title}`}
     >
       <div className="fixed inset-0 overflow-hidden -z-50">
         <AnimatePresence>
           <motion.div
             key={index}
-            className="absolute inset-0 bg-cover bg-center -z-10 "
+            className="absolute inset-0 bg-cover bg-position-[90%_45%] -z-10"
             style={{ backgroundImage: `url(${imgs[index]})` }}
             variants={variants}
             initial="enter"
             animate="center"
             exit="exit"
             transition={{ duration: 1.5, ease: "easeInOut" }}
-          />{" "}
-        </AnimatePresence>{" "}
+          />
+     
+        </AnimatePresence>
       </div>
 
       {/* Zawartość */}

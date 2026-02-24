@@ -53,7 +53,13 @@ export default function ViewPage() {
             <ImageElement img={image_04} alt="Palenisko w górach" />
 
             <ParagraphElement text={`Obok plac zabaw dla dzieci. A kilka kroków dalej – prywatne jacuzzi z widokiem na góry, które o zachodzie słońca robi naprawdę wyjątkowy klimat.`} />
-            <ImageElement img={image_05} alt="plac zabaw dla dzieci przy domku w górach" />
+            <div className="relative w-full aspect-video md:aspect-21/9 rounded-2xl overflow-hidden shadow-md">
+
+              <Image src={image_05} alt="plac zabaw dla dzieci przy domku w górach"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 80vw, 900px"
+                className="object-cover object-[50%_100%]" />
+            </div>
             <ParagraphElement text={`Tu nie trzeba nigdzie jechać, żeby poczuć, że jesteś w górach.`} />
             <p className="font-semibold text-xl mt-12">Spacer zaczyna się pod drzwiami</p>
             <ParagraphElement text={`Domek stoi tuż przy łąkach i szlakach turystycznych. Wystarczy wyjść i możesz iść przed siebie – w stronę lasu, w stronę widoku, w stronę ciszy.`} />

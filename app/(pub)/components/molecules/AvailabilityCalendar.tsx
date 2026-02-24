@@ -72,7 +72,9 @@ export default function AvailabilityCalendar() {
             today: "border border-primary-green rounded-full",
           }}
           styles={{
-            day_button: { cursor: "not-allowed" },
+            day_button: { cursor: "not-allowed",
+              pointerEvents: "none", 
+            },
           }}
         />
       </div>
