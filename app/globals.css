@@ -54,3 +54,25 @@ body {
   }
 }
 
+.range-middle {
+  background-color: #818181; /* zielony */
+  color: white;
+}
+
+.range-start {
+  background: linear-gradient(
+    135deg,
+    transparent 50%,
+    #0B5644 50%
+  );
+  color: white;
+}
+
+.range-end {
+  background: linear-gradient(
+    -45deg,
+    transparent 50%,
+    #0B5644 50%
+  );
+  color: white;
+}

@@ -7,8 +7,11 @@ import { pl } from "date-fns/locale";
 import { addMonths } from "date-fns";
 import { supabase } from "@/app/dashboard/helpers/supabase-browser";
 import { useEffect, useState } from "react";
+// import "index.css";
+
 const normalizeDate = (date: Date) =>
   new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
 const getDaysBetween = (start: Date, end: Date): Date[] => {
   const days: Date[] = [];
 
@@ -25,7 +28,9 @@ const getDaysBetween = (start: Date, end: Date): Date[] => {
 
 export default function AvailabilityCalendar() {
   const [error, setError] = useState<string | null>(null);
-  const [bookedDays, setBookedDays] = useState<Date[]>([]);
+  const [rangeStartDays, setRangeStartDays] = useState<Date[]>([]);
+  const [rangeMiddleDays, setRangeMiddleDays] = useState<Date[]>([]);
+  const [rangeEndDays, setRangeEndDays] = useState<Date[]>([]);
   const getRanges = async () => {
     const { data, error } = await supabase
       .from("calendar")
@@ -38,12 +43,26 @@ export default function AvailabilityCalendar() {
       return;
     }
     if (!data) return;
+    const starts: Date[] = [];
+    const middles: Date[] = [];
+    const ends: Date[] = [];
 
-    const days = data.flatMap((range) =>
-      getDaysBetween(new Date(range.date_from), new Date(range.date_to))
-    );
+    data.forEach((range) => {
+      const start = normalizeDate(new Date(range.date_from));
+      const end = normalizeDate(new Date(range.date_to));
 
-    setBookedDays(days);
+      const days = getDaysBetween(start, end);
+
+      days.forEach((day, index) => {
+        if (index === 0) starts.push(day);
+        else if (index === days.length - 1) ends.push(day);
+        else middles.push(day);
+      });
+    });
+
+    setRangeStartDays(starts);
+    setRangeMiddleDays(middles);
+    setRangeEndDays(ends);
   };
 
   useEffect(() => {
@@ -62,18 +81,27 @@ export default function AvailabilityCalendar() {
         <DayPicker
           mode="multiple"
           className="text-xs sm:text-base"
-          disabled={bookedDays}
+          // disabled={bookedDays}
           numberOfMonths={1}
           startMonth={today}
           endMonth={addMonths(today, 11)}
           locale={pl}
+          modifiers={{
+            range_start: rangeStartDays,
+            range_middle: rangeMiddleDays,
+            range_end: rangeEndDays,
+          }}
           modifiersClassNames={{
             disabled: "line-through text-gray-300",
             today: "border border-primary-green rounded-full",
+            range_start: "range-start",
+            range_middle: "range-middle",
+            range_end: "range-end",
           }}
           styles={{
-            day_button: { cursor: "not-allowed",
-              pointerEvents: "none", 
+            day_button: {
+              cursor: "not-allowed",
+              pointerEvents: "none",
             },
           }}
         />
