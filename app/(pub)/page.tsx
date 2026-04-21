@@ -11,25 +11,11 @@ import Features from "./components/sections/Features";
 import InfoSection from "./components/sections/InfoSection";
 import { supabase } from "../dashboard/helpers/supabase-browser";
 
-const preloadImages = (urls: string[]) => {
-  return Promise.all(
-    urls.map(
-      (src) =>
-        new Promise<void>((resolve, reject) => {
-          const img = new Image();
-          img.src = src;
-          img.onload = () => resolve();
-          img.onerror = reject;
-        })
-    )
-  );
-};
 export default function Home() {
   const [gallery, setGallery] = useState<GalleryItem[]>([]);
   const [images, setImages] = useState<string[]>([]);
   const [reviews, setReviews] = useState<ReviewItem[]>([]);
   const [news, setNews] = useState<NewsItem[]>([]);
-  const [imagesLoaded, setImagesLoaded] = useState(false);
 
   async function getAllNews() {
     const data = await supabase.from("offers").select("*");
@@ -64,40 +50,27 @@ export default function Home() {
   }
   useEffect(() => {
     async function fetchData() {
-      await getAllGallery();
-      await getAllReviews();
-      await getAllNews();
-      await getAllHeroImages();
+      await Promise.all([
+        getAllGallery(),
+        getAllReviews(),
+        getAllNews(),
+        getAllHeroImages(),
+      ]);
     }
    
     fetchData();
   }, []);
-  useEffect(() => {
-    if (!images.length) return;
-
-    preloadImages(images)
-      .then(() => setImagesLoaded(true))
-      .catch(() => setImagesLoaded(true));
-  }, [images]);
 
   return (
     <main>
-      {!imagesLoaded ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white">
-          Ładowanie...
-        </div>
-      ) : (
-        <>
-          <Hero imgs={images} />
-          <section className="w-full bg-white text-center" id="offers">
-            <Features />
-            <InfoSection />
-            <NewsSections news={news} />
-          </section>
-          <GalleryPreview galleryImages={gallery} />
-          <ReviewsSection reviews={reviews} />
-        </>
-      )}
+      <Hero imgs={images} />
+      <section className="w-full bg-white text-center" id="offers">
+        <Features />
+        <InfoSection />
+        <NewsSections news={news} />
+      </section>
+      <GalleryPreview galleryImages={gallery} />
+      <ReviewsSection reviews={reviews} />
       <LocationSection />
     </main>
   );

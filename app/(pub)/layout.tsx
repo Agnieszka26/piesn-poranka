@@ -33,12 +33,21 @@ export const metadata: Metadata = {
       "Oferujemy Państwu pobyt w domku wypoczynkowym w górach położonym na malowniczej działce na wysokości 740m n.p.m. we wsi Łysina, w Beskidzie Małym na grani Ścieszków Gronia.",
     siteName: "Pieśń Poranka",
     locale: "pl_PL",
+    images: [
+      {
+        url: "/og/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Pieśń Poranka - odpoczywam w górach",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Pieśń Poranka - odpoczywam w górach",
     description:
       "Oferujemy Państwu pobyt w domku wypoczynkowym w górach położonym na malowniczej działce na wysokości 740m n.p.m. we wsi Łysina, w Beskidzie Małym na grani Ścieszków Gronia.",
+    images: ["/og/og-image.png"],
   },
 };
 

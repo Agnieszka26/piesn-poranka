@@ -31,6 +31,8 @@ export default function Hero({ imgs }: { imgs: string[] }) {
     return () => clearInterval(interval);
   }, [imgs.length]);
 
+  const currentSrc = imgs[index];
+
   return (
     <section
       className="relative min-h-svh flex items-center justify-center text-white overflow-hidden"
@@ -40,14 +42,26 @@ export default function Hero({ imgs }: { imgs: string[] }) {
         <AnimatePresence>
           <motion.div
             key={index}
-            className="absolute inset-0 bg-cover bg-position-[90%_45%] -z-10"
-            style={{ backgroundImage: `url(${imgs[index]})` }}
+            className="absolute inset-0 -z-10"
             variants={variants}
             initial="enter"
             animate="center"
             exit="exit"
             transition={{ duration: 1.5, ease: "easeInOut" }}
-          />
+          >
+            {currentSrc ? (
+              <Image
+                src={currentSrc}
+                alt=""
+                fill
+                priority={index === 0}
+                sizes="100vw"
+                className="object-cover object-[90%_45%]"
+              />
+            ) : (
+              <div className="absolute inset-0 bg-linear-to-br from-slate-950 via-emerald-950 to-slate-800" />
+            )}
+          </motion.div>
      
         </AnimatePresence>
       </div>
