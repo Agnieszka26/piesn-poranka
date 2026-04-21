@@ -4,6 +4,8 @@ import "../../app/globals.css";
 import Navbar from "./components/molecules/Navbar/Navbar";
 import Footer from "./components/molecules/Footer";
 
+const siteUrl = new URL("https://www.piesnporanka.pl");
+
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
@@ -16,9 +18,28 @@ weight: "400"
 })
 
 export const metadata: Metadata = {
-  title: "Pieśń Poranka - odpoczywam w górach ",
+  metadataBase: siteUrl,
+  title: "Pieśń Poranka - odpoczywam w górach",
   description:
     "Oferujemy Państwu pobyt w domku wypoczynkowym w górach położonym na malowniczej działce na wysokości 740m n.p.m. we wsi Łysina, w Beskidzie Małym na grani Ścieszków Gronia.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    url: "/",
+    title: "Pieśń Poranka - odpoczywam w górach",
+    description:
+      "Oferujemy Państwu pobyt w domku wypoczynkowym w górach położonym na malowniczej działce na wysokości 740m n.p.m. we wsi Łysina, w Beskidzie Małym na grani Ścieszków Gronia.",
+    siteName: "Pieśń Poranka",
+    locale: "pl_PL",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Pieśń Poranka - odpoczywam w górach",
+    description:
+      "Oferujemy Państwu pobyt w domku wypoczynkowym w górach położonym na malowniczej działce na wysokości 740m n.p.m. we wsi Łysina, w Beskidzie Małym na grani Ścieszków Gronia.",
+  },
 };
 
 export default function RootLayout({
@@ -27,7 +48,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="pl">
       <body className={` ${qwigley.variable} ${montserrat.variable} antialiased`}>
         <Navbar />
         {children}
